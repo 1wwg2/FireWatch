@@ -74,5 +74,7 @@ CMakeLists.txt.user*
 
 
 #Build Path
-/home/vitaliy/Qt_Projects/FireWatch/build/
+
+/build/
+
 
