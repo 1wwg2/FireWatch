@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resourses/WhiteThemeLogo/FiremanLogo.png</file>
+        <file>resourses/WhiteThemeLogo/FirewatchLogo.png</file>
+        <file>resourses/WhiteThemeLogo/LogoPass.png</file>
+    </qresource>
+</RCC>
