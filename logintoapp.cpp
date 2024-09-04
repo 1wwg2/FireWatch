@@ -15,15 +15,15 @@ void LoginToApp::SettingField()
 {
     QWidget::setWindowTitle("Login FireWatch");
     LogoApp->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QPixmap ToLogoApp(":/resourses/WhiteThemeLogo/FirewatchLogo.png"); // не забыть поправить пути к файлам
+    QPixmap ToLogoApp(":/resourses/LoginForm/FirewatchLogo.png"); // не забыть поправить пути к файлам
     LogoApp->setPixmap(ToLogoApp);
 
 
-    QPixmap ToLogoUser(":/resourses/WhiteThemeLogo/FiremanLogo.png");
+    QPixmap ToLogoUser(":/resourses/LoginForm/FiremanLogo.png");
     QPixmap scaledToLogoUser = ToLogoUser.scaled(40, 40, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     LogoUser->setPixmap(scaledToLogoUser);
 
-    QPixmap ToLogoPassword(":/resourses/WhiteThemeLogo/LogoPass.png");
+    QPixmap ToLogoPassword(":/resourses/LoginForm/LogoPass.png");
     QPixmap scaledToLogoPassword = ToLogoPassword.scaled(40, 40, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     LogoPass->setPixmap(scaledToLogoPassword);
 
