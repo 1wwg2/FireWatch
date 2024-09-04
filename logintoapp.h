@@ -13,6 +13,8 @@
 #include <QFont>
 #include <QMessageBox>
 
+#include "firewatchmainwindow.h"
+
 class LoginToApp : public QWidget
 {
     Q_OBJECT
@@ -30,6 +32,7 @@ private:
     void SettingField();
     void PlacementComponents();
     void CenterWindow();
+
 private slots:
     void CheckData();
 public:

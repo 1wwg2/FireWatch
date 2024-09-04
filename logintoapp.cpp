@@ -4,11 +4,11 @@
 void LoginToApp::InitializationField()
 {
     LogoApp = new QLabel(this);
-    LogoUser = new QLabel();
-    LoginUser = new QLineEdit();
-    LogoPass = new QLabel();
-    PasswordUser = new QLineEdit();
-    EnterData = new QPushButton();
+    LogoUser = new QLabel(this);
+    LoginUser = new QLineEdit(this);
+    LogoPass = new QLabel(this);
+    PasswordUser = new QLineEdit(this);
+    EnterData = new QPushButton(this);
 }
 
 void LoginToApp::SettingField()
@@ -99,21 +99,19 @@ void LoginToApp::CenterWindow()
 
 void LoginToApp::CheckData()
 {
-
-    if(LoginUser->text() == "1" && PasswordUser->text() == "1")
+    if(LoginUser->text() == "" && PasswordUser->text() == "")
     {
-        QWidget* w = new QWidget();
-        w->show();
-        QWidget::setWindowTitle("FireWatch");
+        FireWatchMainWindow* fire = new FireWatchMainWindow();
+        fire->show();
         close();
     }
     else
     {
-        QMessageBox BoxError;
-        BoxError.setIcon(QMessageBox::Critical);
-        BoxError.setWindowTitle("Login Failed");
-        BoxError.setText("Your Name or Password is incorrect.\nPlease try again.");
-        BoxError.exec();
+        QMessageBox* BoxError = new QMessageBox(this);
+        BoxError->setIcon(QMessageBox::Critical);
+        BoxError->setWindowTitle("Login Failed");
+        BoxError->setText("Your Name or Password is incorrect.\nPlease try again.");
+        BoxError->exec();
         PasswordUser->clear();
     }
 }
@@ -126,7 +124,7 @@ LoginToApp::LoginToApp(QWidget* parent) : QWidget(parent)
     setFixedSize(900, 600);
     CenterWindow();
 
-    connect(EnterData, SIGNAL(clicked()), this, SLOT(CheckData()));
+    connect(EnterData, &QPushButton::clicked, this, &LoginToApp::CheckData);
     // ИКОНКА ОБЯЗАТЕЛЬНО
     // НЕ ЗАБЫВАТЬ ПРО АРХИТЕКТУРУ ДИРЕКТОРИЙ ИКОНОК И КАРТИНОК
     // TODO: Модальные окна обработки ошибок с паролем и дата базой
