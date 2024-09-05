@@ -8,6 +8,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         firewatchmainwindow.cpp \
+        helpdialog.cpp \
         logintoapp.cpp \
         main.cpp \
         mainmenubar.cpp
@@ -19,8 +20,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     firewatchmainwindow.h \
+    helpdialog.h \
     logintoapp.h \
     mainmenubar.h
 
 RESOURCES += \
     resourses.qrc
+
+DISTFILES +=

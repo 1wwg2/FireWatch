@@ -19,6 +19,7 @@ FireWatchMainWindow::FireWatchMainWindow(QMainWindow* parent) : QMainWindow(pare
 {
     InitializationField();
     PlacementComponents();
+    setWindowIcon(QIcon(":/resourses/LoginForm/FirewatchIcon.png"));
     setMinimumSize(700, 700);
    // showMaximized();
 

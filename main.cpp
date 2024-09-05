@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
 
    // app.setPalette(palette);
     LoginToApp* Start = new LoginToApp();
+
     Start->show();
     return app.exec();
 }

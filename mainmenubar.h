@@ -11,20 +11,20 @@
 #include <QUrl>
 #include <QIcon>
 #include <QStyle>
+#include <QScopedPointer>
 
-/*TODO: Добавить иконки к Языкам
-        Все разложить по папкам, структуру ресурсов
-        Добавить Картинку первой мед помощи
+#include "helpdialog.h"
+/*TODO: Добавить Картинку первой мед помощи
         Реализовать считывание labeltext в qdialog, через считывание txt файла
-        Добавить иконку i инфо для about program*/
+        Добавить хот кеи*/
 
 class MainMenuBar : public QMenuBar
 {
     Q_OBJECT
 private:
+      QScopedPointer<HelpDialog> InstructionsForHelpPeople;
     QAction* AboutProgramAction;
     QAction* FirstHelpVictimAction;
-    QAction* FAQAction;
     QMenu* SettingsMenu;
 
     QMenu*  ChangeLang;
