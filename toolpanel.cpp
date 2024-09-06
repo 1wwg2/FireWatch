@@ -22,3 +22,18 @@ ToolPanel::ToolPanel(QWidget* parent) : QToolBar(parent)
     InitializationField();
     SettingField();
 }
+
+QAction* ToolPanel::GetForestDataForm()
+{
+    return ForestDataForm;
+}
+
+QAction* ToolPanel::GetGraphBuildForm()
+{
+    return GraphBuildForm;
+}
+
+QAction* ToolPanel::GetHelpVictimForm()
+{
+    return HelpVictimForm;
+}

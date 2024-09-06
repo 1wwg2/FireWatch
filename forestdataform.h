@@ -2,14 +2,18 @@
 #define FORESTDATAFORM_H
 
 #include <QWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QStackedWidget>
 
 class ForestDataForm : public QWidget
 {
     Q_OBJECT
+private:
+
 public:
     explicit ForestDataForm(QWidget *parent = nullptr);
 
-signals:
 };
 
 #endif // FORESTDATAFORM_H

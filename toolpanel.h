@@ -13,10 +13,13 @@ private:
 
     void InitializationField();
     void SettingField();
-private slots:
 
 public:
     ToolPanel(QWidget* parent = nullptr);
+
+    QAction* GetForestDataForm();
+    QAction* GetGraphBuildForm();
+    QAction* GetHelpVictimForm();
 };
 
 #endif // TOOLPANEL_H

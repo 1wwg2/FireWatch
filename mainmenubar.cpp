@@ -6,7 +6,7 @@ void MainMenuBar::InitializationField()
 
     AboutProgramAction = new QAction("&About Program", this);
     FirstHelpVictimAction = new QAction("&First Help Victim", this);
-    SettingsMenu = new QMenu("Settings", this);
+    SettingsMenu = new QMenu("&Settings", this);
 
     ChangeLang = new QMenu("Language", this);
 
