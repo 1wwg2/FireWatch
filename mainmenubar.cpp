@@ -4,8 +4,8 @@ void MainMenuBar::InitializationField()
 {
     InstructionsForHelpPeople.reset(new HelpDialog());
 
-    AboutProgramAction = new QAction("About Program", this);
-    FirstHelpVictimAction = new QAction("First Help Victim", this);
+    AboutProgramAction = new QAction("&About Program", this);
+    FirstHelpVictimAction = new QAction("&First Help Victim", this);
     SettingsMenu = new QMenu("Settings", this);
 
     ChangeLang = new QMenu("Language", this);
@@ -22,12 +22,12 @@ void MainMenuBar::InitializationField()
 
 void MainMenuBar::SettingField()
 {
-
     SettingsMenu->addMenu(ChangeLang);
     ChangeLang->setIcon(QIcon(":/resourses/MenuBar/DarkAndLightTheme/ChangeLanguage.png"));
     ChangeLang->addAction(LangUsaAction);
     ChangeLang->addAction(LangRuAction);
     ChangeLang->addAction(LangUaAction);
+
 
 
     SettingsMenu->addMenu(ChangeTheme);

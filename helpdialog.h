@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QTextBrowser>
 
+
 class HelpDialog : public QDialog
 {
     Q_OBJECT

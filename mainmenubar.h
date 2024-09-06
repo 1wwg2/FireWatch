@@ -14,15 +14,12 @@
 #include <QScopedPointer>
 
 #include "helpdialog.h"
-/*TODO: Добавить Картинку первой мед помощи
-        Реализовать считывание labeltext в qdialog, через считывание txt файла
-        Добавить хот кеи*/
 
 class MainMenuBar : public QMenuBar
 {
     Q_OBJECT
 private:
-      QScopedPointer<HelpDialog> InstructionsForHelpPeople;
+    QScopedPointer<HelpDialog> InstructionsForHelpPeople;
     QAction* AboutProgramAction;
     QAction* FirstHelpVictimAction;
     QMenu* SettingsMenu;

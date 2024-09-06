@@ -13,5 +13,8 @@
         <file>resourses/MenuBar/DarkAndLightTheme/ChangeTheme.png</file>
         <file>resourses/LoginForm/FirewatchIcon.png</file>
         <file>resourses/MenuBar/FirstAid/FirstHelpInstruction.html</file>
+        <file>resourses/ToolPanel/Help.png</file>
+        <file>resourses/ToolPanel/Trees.png</file>
+        <file>resourses/ToolPanel/Weather.png</file>
     </qresource>
 </RCC>

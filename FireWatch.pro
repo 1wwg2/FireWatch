@@ -8,10 +8,12 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         firewatchmainwindow.cpp \
+        forestdataform.cpp \
         helpdialog.cpp \
         logintoapp.cpp \
         main.cpp \
-        mainmenubar.cpp
+        mainmenubar.cpp \
+        toolpanel.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -20,9 +22,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     firewatchmainwindow.h \
+    forestdataform.h \
     helpdialog.h \
     logintoapp.h \
-    mainmenubar.h
+    mainmenubar.h \
+    toolpanel.h
 
 RESOURCES += \
     resourses.qrc

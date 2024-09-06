@@ -3,7 +3,6 @@
 HelpDialog::HelpDialog(QDialog* parent) : QDialog(parent)
 {
     textBrowser = new QTextBrowser(this);
-
     setFixedSize(700, 1000);
     setModal(false);
     setWindowTitle("First Help Instructions");

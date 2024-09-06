@@ -2,7 +2,8 @@
 
 void FireWatchMainWindow::InitializationField()
 {
-      Bar = new MainMenuBar(this);
+    Bar = new MainMenuBar(this);
+    Panel = new ToolPanel(this);
 }
 
 void FireWatchMainWindow::SettingField()
@@ -13,6 +14,7 @@ void FireWatchMainWindow::SettingField()
 void FireWatchMainWindow::PlacementComponents()
 {
     setMenuBar(Bar);
+    addToolBar(Panel);
 }
 
 FireWatchMainWindow::FireWatchMainWindow(QMainWindow* parent) : QMainWindow(parent)
