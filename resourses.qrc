@@ -16,5 +16,7 @@
         <file>resourses/ToolPanel/Help.png</file>
         <file>resourses/ToolPanel/Trees.png</file>
         <file>resourses/ToolPanel/Weather.png</file>
+        <file>resourses/LoginForm/FirTree.png</file>
+        <file>resourses/LoginForm/FireWatchForm.png</file>
     </qresource>
 </RCC>
