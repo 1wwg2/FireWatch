@@ -9,6 +9,9 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QPixmap>
+#include <QDateTime>
+
+#include "customtablewidget.h"
 // TODO: Сделать фиксированный минимум приложения и иконку с ГЛАВНЫМ ОКНОМ
 class ForestDataForm : public QWidget
 {
@@ -23,9 +26,12 @@ private:
     QComboBox* WeatherCondition;
     QPushButton* SumbitData;
 
+    CustomTableWidget* TableOfWeather;
     void InitializationField();
     void SettingField();
-    void PlacementComponents();
+    void PlacementComponents();\
+
+    void TakeActualData();
 public:
     explicit ForestDataForm(QWidget *parent = nullptr);
 

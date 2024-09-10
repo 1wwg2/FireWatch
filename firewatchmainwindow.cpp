@@ -57,6 +57,8 @@ FireWatchMainWindow::FireWatchMainWindow(QMainWindow* parent) : QMainWindow(pare
     connect(Panel->GetGraphBuildForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectScheduleOfWeather);
     connect(Panel->GetHelpVictimForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectAssistanceToVictim);
 
+    showMaximized();
+
     // showMaximized();
 }
 

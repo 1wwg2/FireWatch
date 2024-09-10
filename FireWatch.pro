@@ -8,6 +8,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         assistancetovictim.cpp \
+        customtablewidget.cpp \
         firewatchmainwindow.cpp \
         forestdataform.cpp \
         helpdialog.cpp \
@@ -24,6 +25,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     assistancetovictim.h \
+    customtablewidget.h \
     firewatchmainwindow.h \
     forestdataform.h \
     helpdialog.h \

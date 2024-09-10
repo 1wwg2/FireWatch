@@ -28,8 +28,6 @@ void MainMenuBar::SettingField()
     ChangeLang->addAction(LangRuAction);
     ChangeLang->addAction(LangUaAction);
 
-
-
     SettingsMenu->addMenu(ChangeTheme);
     ChangeTheme->setIcon(QIcon(":/resourses/MenuBar/DarkAndLightTheme/ChangeTheme.png"));
     ChangeTheme->addAction(LightThemeAction);

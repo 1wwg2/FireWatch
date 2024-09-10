@@ -1,83 +1,96 @@
 #include "forestdataform.h"
 
-// QLabel* NamesReporter;
-// QLabel* DataAndTimeReport;
-// QLabel* PictureOfTree;
-// QLineEdit* Temperature;
-// QLineEdit* WindSpeed;
-// QComboBox* WeatherCondition;
-// QPushButton* SumbitData;
-
 void ForestDataForm::InitializationField()
 {
     NamesReporter = new QLabel("Reported by ", this);
-    DataAndTimeReport = new QLabel("Date:\nTime:", this);
+    DataAndTimeReport = new QLabel(this);
     PictureOfTitle = new QLabel(this);
     PictureOfTree = new QLabel("Picturetree", this);
     Temperature = new QLineEdit("Enter Temp", this);
     WindSpeed = new QLineEdit("Enter W/S", this);
-    WeatherCondition = new QComboBox(this);
+    WeatherCondition = new QComboBox();
     SumbitData = new QPushButton("Submit", this);
+
+    TableOfWeather = new CustomTableWidget(this);
 }
 void ForestDataForm::SettingField()
 {
     QPixmap ToLogoUser(":/resourses/LoginForm/FireWatchForm.png");
-    QPixmap scaledToLogoUser = ToLogoUser.scaled(700, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap scaledToLogoUser = ToLogoUser.scaled(600, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     PictureOfTitle->setPixmap(scaledToLogoUser);
 
     QPixmap TreePicture(":/resourses/LoginForm/FirTree.png");
     QPixmap scaledTreePicture = TreePicture.scaled(300, 1000, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     PictureOfTree->setPixmap(scaledTreePicture);
 
-
-
+    TakeActualData();
 }
-
 
 void ForestDataForm::PlacementComponents()
 {
-    QLabel *secondTree = new QLabel(this);
-    secondTree->setPixmap(PictureOfTree->pixmap());
+    QLabel* Celsius = new QLabel(" Temperature\t\t\t\t\t\t\t\t°C", this);
+    QLabel* WindSpeedLabel = new QLabel(" Wind Speed\t\t\t\t\t\t\t\tkn", this);
+    QLabel *SecondTree = new QLabel(this);
+    SecondTree->setPixmap(PictureOfTree->pixmap());
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
-    QVBoxLayout* Layout1 = new QVBoxLayout();
-    QVBoxLayout* Layout2 = new QVBoxLayout();
-    QVBoxLayout* Layout3 = new QVBoxLayout();
+    QVBoxLayout* LayoutLeft = new QVBoxLayout();
+    QVBoxLayout* LayoutCenter = new QVBoxLayout();
+    QVBoxLayout* LayoutRight = new QVBoxLayout();
+
+    LayoutLeft->setContentsMargins(0, 0, 0, 0);
+    LayoutLeft->addWidget(NamesReporter, 0, Qt::AlignCenter);
+    LayoutLeft->addWidget(PictureOfTree, 0, Qt::AlignCenter);
+
+    LayoutCenter->setContentsMargins(80, 80, 80, 10);
+    LayoutCenter->setSpacing(20);
+
+    PictureOfTitle->setFixedSize(600, 200);
+    LayoutCenter->addWidget(PictureOfTitle, 0, Qt::AlignCenter);
 
 
-    Layout1->setContentsMargins(0, 0, 0, 0);
-    Layout1->addWidget(NamesReporter);
-    Layout1->addWidget(PictureOfTree);
+    LayoutCenter->addWidget(Celsius, 0, Qt::AlignRight);
+    Temperature->setFixedSize(550, 40);
+    LayoutCenter->addWidget(Temperature, 0, Qt::AlignCenter);
 
-    // Place PictureOfTitle and other widgets in Layout2
+    LayoutCenter->addWidget(WindSpeedLabel, 0, Qt::AlignRight);
+    WindSpeed->setFixedSize(550, 40);
+    LayoutCenter->addWidget(WindSpeed, 0, Qt::AlignCenter);
 
-    Layout2->addWidget(PictureOfTitle, 0, Qt::AlignCenter);
-    PictureOfTitle->setContentsMargins(0, 90, 0, 0);
-    Layout2->addWidget(Temperature);
-    Temperature->setContentsMargins(0, 0, 0, 0);
-    Temperature->setFixedSize(1200, 50);
-    Layout2->addWidget(WindSpeed);
-    WindSpeed->setContentsMargins(0, 0, 0, 0);
-    WindSpeed->setFixedSize(1200, 50);
-    Layout2->addWidget(WeatherCondition);
-    Layout2->addWidget(SumbitData);
-    Layout2->setContentsMargins(10, 0, 10, 500);
 
-    // Place DataAndTimeReport and secondTree in Layout3
-    Layout3->addWidget(DataAndTimeReport);
-    Layout3->addWidget(secondTree);
+    TableOfWeather->setFixedSize(500, 200);
+    LayoutCenter->addWidget(TableOfWeather, 0, Qt::AlignCenter);
 
-    // Add Layouts to mainLayout
-    mainLayout->addLayout(Layout1);
-    mainLayout->addLayout(Layout2);
-    mainLayout->addLayout(Layout3);
+    SumbitData->setFixedSize(550, 40);
+    LayoutCenter->addWidget(SumbitData, 0, Qt::AlignCenter);
 
+
+    LayoutCenter->addStretch();
+    LayoutLeft->setContentsMargins(0, 0, 0, 0);
+    LayoutRight->addWidget(DataAndTimeReport, 0, Qt::AlignLeft);
+    LayoutRight->addWidget(SecondTree, 0, Qt::AlignRight);
+
+
+    mainLayout->addStretch();
+    mainLayout->addLayout(LayoutLeft);
+    mainLayout->addStretch();
+    mainLayout->addLayout(LayoutCenter);
+    mainLayout->addStretch();
+    mainLayout->addLayout(LayoutRight);
+    mainLayout->addStretch();
     setLayout(mainLayout);
-
 
 }
 
+void ForestDataForm::TakeActualData()
+{
+    QDateTime CurrentDateTime = QDateTime::currentDateTime();
+    QString DateString = CurrentDateTime.toString("dd.MM.yyyy");
+    QString TimeString = CurrentDateTime.toString("hh:mm:ss\n");
+
+    DataAndTimeReport->setText("Time: " + TimeString +"Date: " + DateString);
+}
 ForestDataForm::ForestDataForm(QWidget *parent) : QWidget(parent)
 {
     InitializationField();

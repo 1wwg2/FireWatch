@@ -18,5 +18,14 @@
         <file>resourses/ToolPanel/Weather.png</file>
         <file>resourses/LoginForm/FirTree.png</file>
         <file>resourses/LoginForm/FireWatchForm.png</file>
+        <file>resourses/Wheather/Blizzard.png</file>
+        <file>resourses/Wheather/Clear.png</file>
+        <file>resourses/Wheather/Cloudy.png</file>
+        <file>resourses/Wheather/DustStorm.png</file>
+        <file>resourses/Wheather/Heat.png</file>
+        <file>resourses/Wheather/Mist.png</file>
+        <file>resourses/Wheather/Rain.png</file>
+        <file>resourses/Wheather/Thunderstorm.png</file>
+        <file>resourses/Wheather/Wind.png</file>
     </qresource>
 </RCC>

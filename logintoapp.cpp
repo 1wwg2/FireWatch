@@ -18,7 +18,6 @@ void LoginToApp::SettingField()
     QPixmap ToLogoApp(":/resourses/LoginForm/FirewatchLogo.png"); // не забыть поправить пути к файлам
     LogoApp->setPixmap(ToLogoApp);
 
-
     QPixmap ToLogoUser(":/resourses/LoginForm/FiremanLogo.png");
     QPixmap scaledToLogoUser = ToLogoUser.scaled(40, 40, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     LogoUser->setPixmap(scaledToLogoUser);

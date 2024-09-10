@@ -17,8 +17,7 @@ int main(int argc, char *argv[])
    //  palette.setColor(QPalette::Link, QColor(42, 130, 218));
 
    // app.setPalette(palette);
-    LoginToApp* Start = new LoginToApp();
-
-    Start->show();
+    FireWatchMainWindow* fire = new FireWatchMainWindow();
+    fire->show();
     return app.exec();
 }
