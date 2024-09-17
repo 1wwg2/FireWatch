@@ -16,7 +16,8 @@ HelpDialog::HelpDialog(QDialog* parent) : QDialog(parent)
 void HelpDialog::LoadFileContent(const QString& FilePath)
 {
     QFile file(FilePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QMessageBox::warning(this, "Error", "Unable to open file.");
         return;
     }
