@@ -12,6 +12,9 @@
 #include <QScreen>
 #include <QFont>
 #include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
 
 #include "firewatchmainwindow.h"
 
@@ -32,6 +35,7 @@ private:
     void SettingField();
     void PlacementComponents();
     void CenterWindow();
+    void CheckWorkDataBase();
 
 private slots:
     void CheckData();

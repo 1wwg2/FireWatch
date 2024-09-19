@@ -76,5 +76,6 @@ CMakeLists.txt.user*
 #Build Path
 
 /build/
+/dump/
 
 

@@ -96,27 +96,65 @@ void LoginToApp::CenterWindow()
     move(x, y);
 }
 
+void LoginToApp::CheckWorkDataBase()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
+
+    if (!QFile::exists(dbPath)) {
+        QMessageBox::critical(this, "Ошибка базы данных", "Файл базы данных не существует. Пожалуйста, проверьте путь к файлу.");
+        return;
+    }
+
+    db.setDatabaseName(dbPath);
+
+    if (!db.open()) {
+        QMessageBox::critical(this, "Ошибка базы данных", "Пожалуйста, свяжитесь с технической поддержкой и сохраните данные другим способом.");
+        return;
+    }
+    qDebug() << "База данных успешно открыта.";
+}
+
 void LoginToApp::CheckData()
 {
-    if(LoginUser->text() == "" && PasswordUser->text() == "")
-    {
+    QString username = LoginUser->text().trimmed();
+    QString password = PasswordUser->text().trimmed();
+
+    if (username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Input Error", "Please enter both your name and password.");
+        return;
+    }
+
+    qDebug() << "Trying to login with Username:" << username << "and Password:" << password;
+
+    QSqlQuery query;
+    query.prepare("SELECT id FROM employees WHERE full_name = :full_name AND password = :password");
+    query.bindValue(":full_name", username);
+    query.bindValue(":password", password);
+
+    if (!query.exec()) {
+        qDebug() << "Query execution failed:" << query.lastError().text();
+        QMessageBox::critical(this, "Database Error", query.lastError().text());
+        return;
+    }
+
+    if (query.next()) {
+        qDebug() << "Login successful!";
         FireWatchMainWindow* fire = new FireWatchMainWindow();
         fire->show();
         close();
-    }
-    else
-    {
-        QMessageBox* BoxError = new QMessageBox(this);
-        BoxError->setIcon(QMessageBox::Critical);
-        BoxError->setWindowTitle("Login Failed");
-        BoxError->setText("Your Name or Password is incorrect.\nPlease try again.");
-        BoxError->exec();
+    } else {
+        qDebug() << "Login failed!";
+        QMessageBox::critical(this, "Login Failed", "Your Name or Password is incorrect.\nPlease try again.");
         PasswordUser->clear();
     }
 }
 
+
+
 LoginToApp::LoginToApp(QWidget* parent) : QWidget(parent)
 {
+    CheckWorkDataBase();
     InitializationField();
     SettingField();
     PlacementComponents();
