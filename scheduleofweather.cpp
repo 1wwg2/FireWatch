@@ -1,10 +1,45 @@
 #include "scheduleofweather.h"
 #include "customtablewidget.h"
 
-
-
 ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
 {
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db");
+
+    if (!db.open()) {
+        qDebug() << "Не удалось подключиться к базе данных:" << db.lastError().text();
+    } else {
+        qDebug() << "Подключение к базе данных успешно!";
+    }
+
+    QString employeeName = "ff ddd";
+    QSqlQuery query;
+
+    // Подготовка SQL-запроса для получения даты
+    query.prepare("SELECT date FROM reports WHERE fullname = :fullname");
+    query.bindValue(":fullname", employeeName);
+
+    QStringList dateList; // Массив строк для хранения дат
+
+    // Выполняем запрос и извлекаем даты
+    if (query.exec())
+    {
+        while (query.next()) {
+            QString date = query.value("report_date").toString();  // Получаем значение даты
+            dateList.append(date);  // Добавляем дату в список
+        }
+    } else {
+        qDebug() << "Ошибка выполнения запроса: " << query.lastError();
+    }
+
+    // Вывод массива строк (для проверки)
+    for (const QString &date : dateList) {
+        qDebug() << date;
+    }
+
+
+
     QStringList categories{" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
     QList<double> temperatures{0, 18, 20, 22, 21, 19, 23, 25};
     QList<double> windSpeeds{0, 5, 7, 6, 8, 4, 9, 5};

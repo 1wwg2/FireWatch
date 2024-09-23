@@ -6,7 +6,10 @@
 #include <QLabel>
 #include <QtCharts>
 #include <QWidget>
-
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
 class ScheduleOfWeather : public QWidget
 {
     Q_OBJECT
