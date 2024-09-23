@@ -99,20 +99,27 @@ void LoginToApp::CenterWindow()
 void LoginToApp::CheckWorkDataBase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
+    const QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
 
-    if (!QFile::exists(dbPath)) {
-        QMessageBox::critical(this, "Ошибка базы данных", "Файл базы данных не существует. Пожалуйста, проверьте путь к файлу.");
+    if (!QFile::exists(dbPath))
+    {
+        CenterWindow();
+        QMessageBox::critical (this, "Database error", "File Database error. Please contact technical support and save the data in another way.");
+        this->close();
+        QCoreApplication::exit(0);
+        std::exit(0);
         return;
     }
 
     db.setDatabaseName(dbPath);
 
-    if (!db.open()) {
-        QMessageBox::critical(this, "Ошибка базы данных", "Пожалуйста, свяжитесь с технической поддержкой и сохраните данные другим способом.");
-        return;
+    if (!db.open())
+    {
+        QMessageBox::critical(this, "Database error", "Please contact technical support and save the data in another way.");
+        this->close();
+        QCoreApplication::exit(0);
+        std::exit(0);
     }
-    qDebug() << "База данных успешно открыта.";
 }
 
 void LoginToApp::CheckData()
@@ -120,31 +127,31 @@ void LoginToApp::CheckData()
     QString username = LoginUser->text().trimmed();
     QString password = PasswordUser->text().trimmed();
 
-    if (username.isEmpty() || password.isEmpty()) {
+    if (username.isEmpty() || password.isEmpty())
+    {
         QMessageBox::warning(this, "Input Error", "Please enter both your name and password.");
         return;
     }
-
-    qDebug() << "Trying to login with Username:" << username << "and Password:" << password;
 
     QSqlQuery query;
     query.prepare("SELECT id FROM employees WHERE full_name = :full_name AND password = :password");
     query.bindValue(":full_name", username);
     query.bindValue(":password", password);
 
-    if (!query.exec()) {
-        qDebug() << "Query execution failed:" << query.lastError().text();
-        QMessageBox::critical(this, "Database Error", query.lastError().text());
+    if (!query.exec())
+    {
+        QMessageBox::critical(this, "Database Error", "Please contact technical support and save the data in another way.");
         return;
     }
 
-    if (query.next()) {
-        qDebug() << "Login successful!";
-        FireWatchMainWindow* fire = new FireWatchMainWindow();
+    if (query.next())
+    {
+        FireWatchMainWindow* fire = new FireWatchMainWindow(username);
         fire->show();
         close();
-    } else {
-        qDebug() << "Login failed!";
+    }
+    else
+    {
         QMessageBox::critical(this, "Login Failed", "Your Name or Password is incorrect.\nPlease try again.");
         PasswordUser->clear();
     }
@@ -154,7 +161,7 @@ void LoginToApp::CheckData()
 
 LoginToApp::LoginToApp(QWidget* parent) : QWidget(parent)
 {
-    CheckWorkDataBase();
+
     InitializationField();
     SettingField();
     PlacementComponents();
@@ -162,8 +169,10 @@ LoginToApp::LoginToApp(QWidget* parent) : QWidget(parent)
     CenterWindow();
 
     connect(EnterData, &QPushButton::clicked, this, &LoginToApp::CheckData);
-    // ИКОНКА ОБЯЗАТЕЛЬНО
-    // НЕ ЗАБЫВАТЬ ПРО АРХИТЕКТУРУ ДИРЕКТОРИЙ ИКОНОК И КАРТИНОК
+
+    show();
+    CheckWorkDataBase();
+
     // TODO: Модальные окна обработки ошибок с паролем и дата базой
 
 }

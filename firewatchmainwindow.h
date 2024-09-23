@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QStackedWidget>
 
+
 #include "mainmenubar.h"
 #include "toolpanel.h"
 #include "forestdataform.h"
@@ -24,7 +25,7 @@ private:
     ScheduleOfWeather* Shedules;
     AssistanceToVictim* DataOfVictim;
 
-    void InitializationField();
+    void InitializationField(const QString& NameWorker);
     void SettingField();
     void PlacementComponents();
 
@@ -34,7 +35,7 @@ private slots:
     void SelectAssistanceToVictim();
 
 public:
-    FireWatchMainWindow(QMainWindow* parent = nullptr);
+    FireWatchMainWindow(const QString& NameWorker, QMainWindow* parent = nullptr);
 
 };
 

@@ -9,7 +9,6 @@ void CustomTableWidget::setupTable()
         "Rain", "Thunderstorm", "Wind"
     };
 
-
     tableWidget->setIconSize(QSize(55, 55));
     tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     tableWidget->horizontalHeader()->setVisible(false);
@@ -38,7 +37,7 @@ void CustomTableWidget::setupTable()
 
 void CustomTableWidget::updateLabel()
 {
-    QList<QTableWidgetItem *> selectedItems = tableWidget->selectedItems();
+    QList<QTableWidgetItem*> selectedItems = tableWidget->selectedItems();
     if (!selectedItems.isEmpty())
     {
         QTableWidgetItem *item = selectedItems.first();

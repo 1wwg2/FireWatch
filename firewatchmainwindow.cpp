@@ -1,13 +1,13 @@
 #include "firewatchmainwindow.h"
 
-void FireWatchMainWindow::InitializationField()
+void FireWatchMainWindow::InitializationField(const QString& NameWorker)
 {
     Bar = new MainMenuBar(this);
     Panel = new ToolPanel(this);
 
     stackedWidget = new QStackedWidget(this);
 
-    FormToEnterData = new ForestDataForm(this);
+    FormToEnterData = new ForestDataForm(NameWorker, this);
     Shedules = new ScheduleOfWeather(this);
     DataOfVictim = new AssistanceToVictim(this);
 }
@@ -46,9 +46,9 @@ void FireWatchMainWindow::SelectAssistanceToVictim()
     // может высылать на почту
 }
 
-FireWatchMainWindow::FireWatchMainWindow(QMainWindow* parent) : QMainWindow(parent)
+FireWatchMainWindow::FireWatchMainWindow(const QString& NameWorker, QMainWindow* parent) : QMainWindow(parent)
 {
-    InitializationField();
+    InitializationField(NameWorker);
     SettingField();
     PlacementComponents();
 

@@ -14,6 +14,7 @@
 #include <QDoubleValidator>
 #include <QMessageBox>
 #include <QTimer>
+#include <QSqlQuery>
 
 #include "customtablewidget.h"
 
@@ -31,11 +32,16 @@ private:
     QPushButton* SumbitData;
     QTimer* Timer;
     CustomTableWidget* TableOfWeather;
-    void InitializationField();
+
+    void InitializationField(const QString& NameWorker);
     void SettingField();
     void PlacementComponents();
 
     void TakeActualData();
+    void InputMessError(const QString& ErrorMess, const QString& ErrorTitle = "Error!");
+    void SendInfoToDataBase();
+    void AcceptDialog();
+
 
     class CustomValidator : public QDoubleValidator
     {
@@ -60,7 +66,7 @@ private:
 private slots:
     void SentDataFromDay();
 public:
-    explicit ForestDataForm(QWidget *parent = nullptr);
+    explicit ForestDataForm(const QString& NameWorker, QWidget *parent = nullptr);
 
 
 };

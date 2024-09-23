@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
-
+#include <QtCharts>
+#include <QWidget>
 
 class ScheduleOfWeather : public QWidget
 {

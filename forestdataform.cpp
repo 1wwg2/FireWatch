@@ -1,8 +1,8 @@
 #include "forestdataform.h"
 
-void ForestDataForm::InitializationField()
+void ForestDataForm::InitializationField(const QString& NameWorker)
 {
-    NamesReporter = new QLabel("Reported by ", this);
+    NamesReporter = new QLabel("Reported by:\n" + NameWorker, this);
     DataAndTimeReport = new QLabel(this);
     PictureOfTitle = new QLabel(this);
     PictureOfTree = new QLabel("Picturetree", this);
@@ -95,90 +95,146 @@ void ForestDataForm::TakeActualData()
 }
 
 
+void ForestDataForm::InputMessError(const QString& ErrorMess, const QString& ErrorTitle)
+{
+    QMessageBox* BoxError = new QMessageBox(this);
+    BoxError->setIcon(QMessageBox::Critical);
+    BoxError->setWindowTitle(ErrorTitle);
+    BoxError->setText(ErrorMess);
+    BoxError->exec();
+}
+
+void ForestDataForm::SendInfoToDataBase()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    const QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
+    db.setDatabaseName(dbPath);
+
+    if (!db.open())
+    {
+        QMessageBox::critical(this, "Database Error", "Failed to open the database.");
+        return;
+    }
+
+    QString temperature = Temperature->text().trimmed();
+    QString windSpeed = WindSpeed->text().trimmed();
+    QString weather = TableOfWeather->GetState().trimmed();
+
+
+    QString fullName = NamesReporter->text().trimmed();
+    QStringList parts = fullName.split('\n');
+    QString name = (parts.size() > 1) ? parts[1].trimmed() : fullName;
+    QString dataReport = DataAndTimeReport->text().trimmed();
+
+    if (temperature.isEmpty() || windSpeed.isEmpty() || weather.isEmpty())
+    {
+        QMessageBox::warning(this, "Input Error", "All fields must be filled out.");
+        return;
+    }
+
+    QSqlQuery query;
+    query.prepare("INSERT INTO reports (full_name, temperature, wind_speed, weather) "
+                  "VALUES (:full_name, :temperature, :wind_speed, :weather)");
+    query.bindValue(":full_name", name);
+    query.bindValue(":temperature", temperature.toDouble());
+    query.bindValue(":wind_speed", windSpeed.toDouble());
+    query.bindValue(":weather", weather);
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(this, "Database Error", "Could not save report.");
+        return;
+    }
+
+    QMessageBox::information(this, "Success", "Report submitted successfully!");
+}
+
+void ForestDataForm::AcceptDialog()
+{
+
+    QDialog* DataConfirmation = new QDialog(this);
+    DataConfirmation->setWindowTitle("Confirm Data Log");
+    DataConfirmation->setFixedSize(300, 300);
+
+    QPushButton *OkButton = new QPushButton("OK");
+    QPushButton *CancelButton = new QPushButton("Cancel");
+    QIcon OkIcon = QApplication::style()->standardIcon(QStyle::SP_DialogOkButton);
+    QIcon CancelIcon = QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton);
+    OkButton->setIcon(OkIcon);
+    OkButton->setDefault(true);
+    CancelButton->setIcon(CancelIcon);
+
+    QHBoxLayout *ButtonLayout = new QHBoxLayout();
+    ButtonLayout->addWidget(CancelButton);
+    ButtonLayout->addWidget(OkButton);
+
+    QVBoxLayout* DataPositioning = new QVBoxLayout();
+
+
+    QLabel* DataLog = new QLabel(
+        QString("Temperature: " + Temperature->text()
+                + "\nWind Speed: " + WindSpeed->text()
+                + "\nWheather state is "
+                + TableOfWeather->GetState()
+                + "\nReported by:\n" + NamesReporter->text()
+                + "\n\nDate of report submission\n"
+                +  DataAndTimeReport->text())
+        , this);
+
+    DataPositioning->addWidget(DataLog);
+    DataPositioning->addLayout(ButtonLayout);
+    DataConfirmation->setLayout(DataPositioning);
+
+    connect(OkButton, &QPushButton::clicked, DataConfirmation, &QDialog::accept);
+    connect(CancelButton, &QPushButton::clicked, DataConfirmation, &QDialog::reject);
+
+    DataConfirmation->exec();
+
+    if(DataConfirmation->result() == QDialog::Accepted)
+    {
+        SendInfoToDataBase();
+    }
+    else
+    {
+        DataConfirmation->close();
+    }
+
+}
+
 
 void ForestDataForm::SentDataFromDay()
 {
     if(Temperature->text().isEmpty())
     {
-        QMessageBox* BoxError = new QMessageBox(this);
-        BoxError->setIcon(QMessageBox::Critical);
-        BoxError->setWindowTitle("Error!");
-        BoxError->setText("Temperature form is empty!.\nPlease enter data from your device.");
-        BoxError->exec();
+        InputMessError("Temperature form is empty!.\nPlease enter data from your device.");
     }
     else if(WindSpeed->text().isEmpty())
     {
-        QMessageBox* BoxError = new QMessageBox(this);
-        BoxError->setIcon(QMessageBox::Critical);
-        BoxError->setWindowTitle("Error!");
-        BoxError->setText("Wind Speed form is empty!.\nPlease enter data from your device.");
-        BoxError->exec();
+        InputMessError("Wind Speed form is empty!.\nPlease enter data from your device.");
     }
     else if(TableOfWeather->GetState().isEmpty())
     {
-        QMessageBox* BoxError = new QMessageBox(this);
-        BoxError->setIcon(QMessageBox::Critical);
-        BoxError->setWindowTitle("Error!");
-        BoxError->setText("Wheather state form is empty!.\nPlease enter data from your device.");
-        BoxError->exec();
+       InputMessError("Wheather state form is empty!.\nPlease enter data from your device.");
+
     }
     else
     {
-        QDialog* DataConfirmation = new QDialog();
-        DataConfirmation->setWindowTitle("Confirm Data Log");
-        DataConfirmation->setFixedSize(300, 300);
-
-        QPushButton *OkButton = new QPushButton("OK");
-        QPushButton *CancelButton = new QPushButton("Cancel");
-        QIcon OkIcon = QApplication::style()->standardIcon(QStyle::SP_DialogOkButton);
-        QIcon CancelIcon = QApplication::style()->standardIcon(QStyle::SP_DialogCancelButton);
-        OkButton->setIcon(OkIcon);
-        OkButton->setDefault(true);
-        CancelButton->setIcon(CancelIcon);
-
-
-
-        QHBoxLayout *ButtonLayout = new QHBoxLayout();
-        ButtonLayout->addWidget(CancelButton);
-        ButtonLayout->addWidget(OkButton);
-
-
-        QVBoxLayout* DataPositioning = new QVBoxLayout();
-        QLabel* DataLog = new QLabel(
-            QString("Temperature: " + Temperature->text()
-                    + "\nWind Speed: " + WindSpeed->text()
-                    + "\nWheather state is "
-                    + TableOfWeather->GetState()
-                    + "\n" +  NamesReporter->text()
-                    + "\n\nDate of report submission\n"
-                    +  DataAndTimeReport->text())
-                                                    , this);
-
-        DataPositioning->addWidget(DataLog);
-        DataPositioning->addLayout(ButtonLayout);
-        DataConfirmation->setLayout(DataPositioning);
-
-        connect(OkButton, &QPushButton::clicked, DataConfirmation, &QDialog::accept);
-        connect(CancelButton, &QPushButton::clicked, DataConfirmation, &QDialog::reject);
-
-
-        DataConfirmation->exec();
-
-        if(DataConfirmation->result() == QDialog::Accepted)
+        if(Temperature->text().trimmed().toInt() >= 56)
         {
-            qDebug() << "LALALALALALA";
-        }
-        else
-        {
-            DataConfirmation->close();
+            Temperature->setText(QString("56.0"));
         }
 
+        if(WindSpeed->text().trimmed().toInt() >= 174)
+        {
+            WindSpeed->setText(QString("174.0"));
+        }
+        AcceptDialog();
     }
 }
 
-ForestDataForm::ForestDataForm(QWidget *parent) : QWidget(parent)
+ForestDataForm::ForestDataForm(const QString& NameWorker, QWidget *parent) : QWidget(parent)
 {
-    InitializationField();
+    InitializationField(NameWorker);
     SettingField();
     PlacementComponents();
 
