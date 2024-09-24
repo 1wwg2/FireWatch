@@ -13,7 +13,7 @@
 #include <QStyle>
 #include <QScopedPointer>
 
-#include "helpdialog.h"
+#include "src/FormForReport/helpdialog.h"
 
 class MainMenuBar : public QMenuBar
 {

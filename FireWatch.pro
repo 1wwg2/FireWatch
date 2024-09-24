@@ -7,16 +7,16 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        src/HelpVictimDialog/assistancetovictim.cpp \
-        src/FormForReport/customtablewidget.cpp \
-        src/MainWindowApp/firewatchmainwindow.cpp \
-        src/FormForReport/forestdataform.cpp \
-        src/FormForReport/helpdialog.cpp \
-        src/LoginToApp/logintoapp.cpp \
+        $$PWD/src/HelpVictimDialog/assistancetovictim.cpp \
+        $$PWD/src/FormForReport/customtablewidget.cpp \
+        $$PWD/src/MainWindowApp/firewatchmainwindow.cpp \
+        $$PWD/src/FormForReport/forestdataform.cpp \
+        $$PWD/src/FormForReport/helpdialog.cpp \
+        $$PWD/src/LoginToApp/logintoapp.cpp \
         main.cpp \
-        src/ControlPanels/mainmenubar.cpp \
-        src/MakeShedules/scheduleofweather.cpp \
-        src/ControlPanels/toolpanel.cpp
+        $$PWD/src/ControlPanels/mainmenubar.cpp \
+        $$PWD/src/MakeShedules/scheduleofweather.cpp \
+        $$PWD/src/ControlPanels/toolpanel.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -24,15 +24,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    src/HelpVictimDialog/assistancetovictim.h \
-    src/FormForReport/customtablewidget.h \
-    src/MainWindowApp/firewatchmainwindow.h \
-    src/FormForReport/forestdataform.h \
-    src/FormForReport/helpdialog.h \
-    src/LoginToApp/logintoapp.h \
-    src/ControlPanels/mainmenubar.h \
-    src/MakeShedules/scheduleofweather.h \
-    src/ControlPanels/toolpanel.h
+    $$PWD/src/HelpVictimDialog/assistancetovictim.h \
+    $$PWD/src/FormForReport/customtablewidget.h \
+    $$PWD/src/MainWindowApp/firewatchmainwindow.h \
+    $$PWD/src/FormForReport/forestdataform.h \
+    $$PWD/src/FormForReport/helpdialog.h \
+    $$PWD/src/LoginToApp/logintoapp.h \
+    $$PWD/src/ControlPanels/mainmenubar.h \
+    $$PWD/src/MakeShedules/scheduleofweather.h \
+    $$PWD/src/ControlPanels/toolpanel.h
 
 RESOURCES += \
     resourses.qrc

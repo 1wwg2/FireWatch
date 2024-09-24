@@ -7,11 +7,11 @@
 #include <QStackedWidget>
 
 
-#include "mainmenubar.h"
-#include "toolpanel.h"
-#include "forestdataform.h"
-#include "scheduleofweather.h"
-#include "assistancetovictim.h"
+#include "src/ControlPanels/mainmenubar.h"
+#include "src/ControlPanels/toolpanel.h"
+#include "src/FormForReport/forestdataform.h"
+#include "src/MakeShedules/scheduleofweather.h"
+#include "src/HelpVictimDialog/assistancetovictim.h"
 
 class FireWatchMainWindow : public QMainWindow
 {

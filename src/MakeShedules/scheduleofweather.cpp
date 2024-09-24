@@ -1,5 +1,5 @@
 #include "scheduleofweather.h"
-#include "customtablewidget.h"
+#include "src/FormForReport/customtablewidget.h"
 
 ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
 {

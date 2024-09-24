@@ -16,7 +16,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include "firewatchmainwindow.h"
+#include "src/MainWindowApp/firewatchmainwindow.h"
 
 class LoginToApp : public QWidget
 {
