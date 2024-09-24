@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
    // app.setPalette(palette);
    //LoginToApp* fire = new LoginToApp();
-    FireWatchMainWindow* fire = new FireWatchMainWindow("ff ddd");
+    FireWatchMainWindow* fire = new FireWatchMainWindow("1");
     fire->show();
 
     return app.exec();

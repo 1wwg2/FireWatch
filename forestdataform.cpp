@@ -106,15 +106,18 @@ void ForestDataForm::InputMessError(const QString& ErrorMess, const QString& Err
 
 void ForestDataForm::SendInfoToDataBase()
 {
+
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     const QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
     db.setDatabaseName(dbPath);
+
 
     if (!db.open())
     {
         QMessageBox::critical(this, "Database Error", "Failed to open the database.");
         return;
     }
+
 
     QString temperature = Temperature->text().trimmed();
     QString windSpeed = WindSpeed->text().trimmed();
@@ -124,7 +127,6 @@ void ForestDataForm::SendInfoToDataBase()
     QString fullName = NamesReporter->text().trimmed();
     QStringList parts = fullName.split('\n');
     QString name = (parts.size() > 1) ? parts[1].trimmed() : fullName;
-    QString dataReport = DataAndTimeReport->text().trimmed();
 
     if (temperature.isEmpty() || windSpeed.isEmpty() || weather.isEmpty())
     {
@@ -132,22 +134,39 @@ void ForestDataForm::SendInfoToDataBase()
         return;
     }
 
+
+    QSqlQuery findEmployeeQuery;
+    findEmployeeQuery.prepare("SELECT id FROM employees WHERE full_name = :full_name");
+    findEmployeeQuery.bindValue(":full_name", name);
+
+    if (!findEmployeeQuery.exec() || !findEmployeeQuery.next())
+    {
+        QMessageBox::critical(this, "Database Error", "Could not find employee.");
+        return;
+    }
+
+    int employeeId = findEmployeeQuery.value(0).toInt();
+
+    // Вставляем данные в таблицу reports
     QSqlQuery query;
-    query.prepare("INSERT INTO reports (full_name, temperature, wind_speed, weather) "
-                  "VALUES (:full_name, :temperature, :wind_speed, :weather)");
-    query.bindValue(":full_name", name);
+    query.prepare("INSERT INTO reports (employee_id, temperature, wind_speed, weather) "
+                  "VALUES (:employee_id, :temperature, :wind_speed, :weather)");
+    query.bindValue(":employee_id", employeeId);
     query.bindValue(":temperature", temperature.toDouble());
     query.bindValue(":wind_speed", windSpeed.toDouble());
     query.bindValue(":weather", weather);
 
+    // Проверяем успешность выполнения запроса
     if (!query.exec())
     {
         QMessageBox::critical(this, "Database Error", "Could not save report.");
         return;
     }
 
+    // Уведомляем о успешном сохранении
     QMessageBox::information(this, "Success", "Report submitted successfully!");
 }
+
 
 void ForestDataForm::AcceptDialog()
 {
@@ -193,6 +212,9 @@ void ForestDataForm::AcceptDialog()
     if(DataConfirmation->result() == QDialog::Accepted)
     {
         SendInfoToDataBase();
+        Temperature->clear();
+        WindSpeed->clear();
+        TableOfWeather->clearFocus();
     }
     else
     {
