@@ -26,11 +26,11 @@ int main(int argc, char *argv[])
 
 
 
-/*CREATE TABLE employees (
+/* CREATE TABLE employees (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     full_name TEXT NOT NULL,
     password TEXT NOT NULL
-);
+    );
 
 CREATE TABLE reports (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,12 +40,7 @@ CREATE TABLE reports (
     weather TEXT NOT NULL,
     report_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (employee_id) REFERENCES employees (id)
-);
+    )
 
-INSERT INTO employees (full_name, password) VALUES ('Иван Иванов', 'password123');
 
-INSERT INTO reports (employee_id, temperature, wind_speed, weather) VALUES (1, 25.5, 10.2, 'Солнечно')
-
-DELETE FROM reports;
-DELETE FROM sqlite_sequence WHERE name='reports';
-*/
+INSERT INTO employees (full_name, password) VALUES ('Имя Фамилия', 'ваш_пароль');*/
