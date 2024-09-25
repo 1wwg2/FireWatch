@@ -57,7 +57,7 @@ void ScheduleOfWeather::WorkWithDb()
 
 }
 
-QChart* ScheduleOfWeather::MakeTempChartApi(const QStringList& categories, const QList<double>& temperatures)
+QChart* ScheduleOfWeather::MakeTempChartApi(const QList<double>& temperatures)
 {
     QChart *temperatureChart = new QChart();
     temperatureChart->setTitle("Температура за неделю");
@@ -82,7 +82,7 @@ QChart* ScheduleOfWeather::MakeTempChartApi(const QStringList& categories, const
 
 }
 
-QChart* ScheduleOfWeather::MakeWindSpChartApi(const QStringList& categories, const QList<double>& windSpeeds)
+QChart* ScheduleOfWeather::MakeWindSpChartApi(const QList<double>& windSpeeds)
 {
     QChart *windSpeedChart = new QChart();
     windSpeedChart->setTitle("Скорость ветра за неделю");
@@ -108,7 +108,7 @@ QChart* ScheduleOfWeather::MakeWindSpChartApi(const QStringList& categories, con
 
 }
 
-QChart* MakeWindSpChartDataBase(const QStringList& categories, const QList<double>& sensorTemperatures)
+QChart* ScheduleOfWeather::MakeWindSpChartDataBase(const QList<double>& sensorTemperatures)
 {
     QChart *sensorTemperatureChart = new QChart();
     sensorTemperatureChart->setTitle("Температура с датчика за неделю");
@@ -134,7 +134,7 @@ QChart* MakeWindSpChartDataBase(const QStringList& categories, const QList<doubl
     return sensorTemperatureChart;
 }
 
-QChart* MakeTempChartDataBase(const QStringList& categories, const QList<double>& sensorWindSpeeds)
+QChart* ScheduleOfWeather::MakeTempChartDataBase(const QList<double>& sensorWindSpeeds)
 {
     QChart *sensorWindSpeedChart = new QChart();
     sensorWindSpeedChart->setTitle("Скорость ветра с датчика за неделю");
@@ -169,8 +169,10 @@ ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
 {
 
 
-    WorkWithDb();
-    QStringList categories{" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
+   // WorkWithDb();
+    QVector<QString> TempCategories = {" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
+     categories = {" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
+
     QList<double> temperatures{0, 2, 0, 0, -10, 0, 23, 25};
     //QList<double> temperatures2{0, 18, 20, 22, 21, 19, 23, 25};
     QList<double> windSpeeds{0, 5, 7, 6, 8, 4, 9, 5};
@@ -180,13 +182,13 @@ ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
     QList<double> sensorWindSpeeds{0, 4, 6, 5, 7, 3, 8, 4};
 
     // Создание графика температуры
-    QChart* temperatureChart = MakeTempChartApi(categories, temperatures);
+    QChart* temperatureChart = MakeTempChartApi(temperatures);
     // Создание графика скорости ветра
-    QChart* windSpeedChart = MakeWindSpChartApi(categories, windSpeeds);
-    // Создание графика температуры с датчика
-    QChart* sensorTemperatureChart = MakeWindSpChartApi(categories, sensorTemperatures);
-    // Создание графика скорости ветра с датчика
-    QChart* sensorWindSpeedChart = MakeWindSpChartApi(categories, sensorWindSpeeds);
+    QChart* windSpeedChart = MakeWindSpChartApi(windSpeeds);
+    // // Создание графика температуры с датчика
+    QChart* sensorTemperatureChart = MakeTempChartDataBase(sensorTemperatures);
+    // // Создание графика скорости ветра с датчика
+    QChart* sensorWindSpeedChart = MakeWindSpChartApi(sensorWindSpeeds);
 
     // Создание виджетов графиков
     QChartView *temperatureChartView = new QChartView(temperatureChart);
@@ -202,7 +204,7 @@ ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
     sensorWindSpeedChartView->setRenderHint(QPainter::Antialiasing);
 
     // Создание вертикального layout для размещения графиков
-    QHBoxLayout* mainlayout = new QHBoxLayout();
+    QHBoxLayout* mainlayout = new QHBoxLayout(this);
     QVBoxLayout *leftLayout = new QVBoxLayout();
     QVBoxLayout *rightLayout = new QVBoxLayout();
 
@@ -217,7 +219,7 @@ ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
 
     mainlayout->addLayout(rightLayout);
 
-    CustomTableWidget* TableOfWeather = new CustomTableWidget();
+//    CustomTableWidget* TableOfWeather = new CustomTableWidget();
 
 //    mainlayout->addWidget(TableOfWeather);
 

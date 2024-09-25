@@ -23,20 +23,27 @@ private:
     QChart *sensorTemperatureChart;
     QChart *sensorWindSpeedChart;*/
 
-   /* QStringList categories;
+    /* QStringList categories;
     QList<double> temperatures;
     QList<double> windSpeeds;
     QList<double> sensorTemperatures;
     QList<double> sensorWindSpeeds;*/
 
-
+   QVector<QString> categories; // Поле класса для хранения категорий
     void WorkWithDb();
 
-    QChart* MakeTempChartApi(const QStringList& categories, const QList<double>& temperatures);
-    QChart* MakeWindSpChartApi(const QStringList& categories, const QList<double>& windSpeeds);
+    QChart* MakeTempChartApi(const QList<double>& temperatures);
+    QChart* MakeWindSpChartApi(const QList<double>& windSpeeds);
 
-    QChart* MakeWindSpChartDataBase(const QStringList& categories, const QList<double>& sensorTemperatures);
-    QChart* MakeTempChartDataBase(const QStringList& categories, const QList<double>& sensorWindSpeeds);
+    QChart* MakeWindSpChartDataBase(const QList<double>& sensorTemperatures);
+    QChart* MakeTempChartDataBase(const QList<double>& sensorWindSpeeds);
+
+
+    /*QChart* MakeTempChartApi(const QList<double>& temperatures);
+    QChart* MakeWindSpChartApi(const QList<double>& windSpeeds);
+
+    QChart* MakeWindSpChartDataBase(const QList<double>& sensorTemperatures);
+    QChart* MakeTempChartDataBase(const QList<double>& sensorWindSpeeds);*/
 
     void PlacementOfCharts();
 public:
