@@ -46,6 +46,7 @@ private:
     class CustomValidator : public QDoubleValidator
     {
     public:
+
         CustomValidator(QObject* parent = nullptr) : QDoubleValidator(parent)
         {
             setDecimals(1);

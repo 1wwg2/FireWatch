@@ -1,5 +1,23 @@
 #include "scheduleofweather.h"
-#include "src/FormForReport/customtablewidget.h"
+
+
+QString ScheduleOfWeather::ExtractDate(const QString& dateTimeString)
+{
+    QDateTime dateTime = QDateTime::fromString(dateTimeString, "yyyy-MM-dd HH:mm:ss");
+    if (dateTime.isValid())
+    {
+        return dateTime.date().toString("yyyy-MM-dd");
+    }
+    else
+    {
+        QMessageBox* BoxError = new QMessageBox();
+        BoxError->setIcon(QMessageBox::Critical);
+        BoxError->setWindowTitle("Error!");
+        BoxError->setText("Contact with tech support");
+        BoxError->exec();
+        return QString();
+    }
+}
 
 void ScheduleOfWeather::WorkWithDb()
 {
@@ -16,26 +34,29 @@ void ScheduleOfWeather::WorkWithDb()
         qDebug() << "Подключение к базе данных успешно!";
     }
 
-    QString employeeName = "ff ddd";
-    QString reportDate = "2024-09-24";
+    QString employeeName = "1";
     QSqlQuery query;
 
-    // Подготовка SQL-запроса для получения данных отчета за определенную дату
     query.prepare(R"(
-        SELECT r.temperature, r.wind_speed, r.weather, r.report_date
-        FROM reports r
-        JOIN employees e ON r.employee_id = e.id
-        WHERE e.full_name = :full_name
-        AND DATE(r.report_date) = :report_date
+        SELECT temperature, wind_speed, weather, report_date
+        FROM (
+            SELECT r.temperature, r.wind_speed, r.weather, r.report_date
+            FROM reports r
+            JOIN employees e ON r.employee_id = e.id
+            WHERE e.full_name = :full_name
+            ORDER BY r.report_date DESC
+            LIMIT 7
+        ) AS last_reports
+        ORDER BY report_date ASC;
     )");
 
-    // Связываем параметры
     query.bindValue(":full_name", employeeName);
-    query.bindValue(":report_date", reportDate);
 
-    // Выполняем запрос и извлекаем данные
     if (query.exec())
     {
+        QVector<double> TemperatureDb{};
+        QList<QString> DateFromSevenDays{}; // возможно убрать
+        int i = 0;
         while (query.next())
         {
             double temperature = query.value("temperature").toDouble();
@@ -43,12 +64,16 @@ void ScheduleOfWeather::WorkWithDb()
             QString weather = query.value("weather").toString();
             QString reportDate = query.value("report_date").toString();
 
-            // Выводим данные в консоль
-            qDebug() << "Температура:" << temperature
+            TemperatureDb.push_back(temperature);
+            DateFromSevenDays.push_back(ExtractDate(reportDate));
+            qDebug() << ++i << "Температура:" << temperature
                      << "Скорость ветра:" << windSpeed
                      << "Погода:" << weather
                      << "Дата отчета:" << reportDate;
         }
+
+        MakeCategories();
+        SetDataToScheudle(TemperatureDb);
     }
     else
     {
@@ -57,21 +82,68 @@ void ScheduleOfWeather::WorkWithDb()
 
 }
 
+void ScheduleOfWeather::MakeCategories()
+{
+
+    QList<QString> TempCategories = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+    QDate today = QDate::currentDate();
+    QString dayOfWeek = today.toString("ddd");
+
+    qDebug() << "Сегодняшняя дата:" << today.toString("yyyy-MM-dd");
+    qDebug() << "Сегодня день недели (название):" << dayOfWeek;
+
+    int dayIndex = TempCategories.indexOf(dayOfWeek);
+
+    Categories = {" "};
+
+    if (dayIndex != -1)
+    {
+        for (int i = dayIndex; i < TempCategories.size(); ++i)
+        {
+            Categories.push_back(TempCategories[i] + " (" + today.addDays(i - dayIndex).toString("MM-dd") + ")");
+        }
+
+        for (int i = 0; i < dayIndex; ++i)
+        {
+            Categories.push_back(TempCategories[i] + " (" + today.addDays(TempCategories.size() - dayIndex + i).toString("MM-dd") + ")");
+        }
+    }
+    else
+    {
+        qDebug() << "День недели не найден в списке!";
+    }
+
+
+}
+
+
+void ScheduleOfWeather::SetDataToScheudle(const QVector<double>& TemperatureDb)
+{
+
+    temperatures = {0, 17, 19, qQNaN(), 20, 18, 22, 24};
+    windSpeeds = {0, 5, 7, 6, 8, 4, 9, 5};
+
+    sensorTemperatures = {0, 17, 19, 21, 20, 18, 22, 24};
+    sensorWindSpeeds = {0, 4, 6, 5, 7, 3, 8, 4};
+
+}
+
+
 QChart* ScheduleOfWeather::MakeTempChartApi(const QList<double>& temperatures)
 {
     QChart *temperatureChart = new QChart();
     temperatureChart->setTitle("Температура за неделю");
 
     QLineSeries *temperatureSeries = new QLineSeries();
-    for (int i = 0; i < categories.size(); ++i) {
+    for (int i = 0; i < Categories.size(); ++i) {
         temperatureSeries->append(i, temperatures[i]);
     }
     temperatureSeries->setName("Температура (°C)");
     temperatureChart->addSeries(temperatureSeries);
 
     QCategoryAxis *axisXTemp = new QCategoryAxis();
-    for (int i = 0; i < categories.size(); ++i) {
-        axisXTemp->append(categories[i], i);
+    for (int i = 0; i < Categories.size(); ++i) {
+        axisXTemp->append(Categories[i], i);
     }
     temperatureChart->setAxisX(axisXTemp, temperatureSeries);
 
@@ -88,16 +160,16 @@ QChart* ScheduleOfWeather::MakeWindSpChartApi(const QList<double>& windSpeeds)
     windSpeedChart->setTitle("Скорость ветра за неделю");
 
     QLineSeries *windSpeedSeries = new QLineSeries();
-    for (int i = 0; i < categories.size(); ++i) {
+    for (int i = 0; i < Categories.size(); ++i) {
         windSpeedSeries->append(i, windSpeeds[i]);
     }
     windSpeedSeries->setName("Скорость ветра (м/с)");
     windSpeedChart->addSeries(windSpeedSeries);
 
     QCategoryAxis *axisXWind = new QCategoryAxis();
-    for (int i = 0; i < categories.size(); ++i)
+    for (int i = 0; i < Categories.size(); ++i)
     {
-        axisXWind->append(categories[i], i);
+        axisXWind->append(Categories[i], i);
     }
     windSpeedChart->setAxisX(axisXWind, windSpeedSeries);
 
@@ -115,7 +187,7 @@ QChart* ScheduleOfWeather::MakeWindSpChartDataBase(const QList<double>& sensorTe
     QLineSeries *sensorTemperatureSeries = new QLineSeries();
     sensorTemperatureSeries->setColor(QColor(Qt::red));
 
-    for (int i = 0; i < categories.size(); ++i) {
+    for (int i = 0; i < Categories.size(); ++i) {
         sensorTemperatureSeries->append(i, sensorTemperatures[i]);
     }
     sensorTemperatureSeries->setName("Температура с датчика (°C)");
@@ -123,8 +195,8 @@ QChart* ScheduleOfWeather::MakeWindSpChartDataBase(const QList<double>& sensorTe
     sensorTemperatureChart->addSeries(sensorTemperatureSeries);
 
     QCategoryAxis *axisXSensorTemp = new QCategoryAxis();
-    for (int i = 0; i < categories.size(); ++i) {
-        axisXSensorTemp->append(categories[i], i);
+    for (int i = 0; i < Categories.size(); ++i) {
+        axisXSensorTemp->append(Categories[i], i);
     }
     sensorTemperatureChart->setAxisX(axisXSensorTemp, sensorTemperatureSeries);
 
@@ -142,15 +214,15 @@ QChart* ScheduleOfWeather::MakeTempChartDataBase(const QList<double>& sensorWind
     QLineSeries *sensorWindSpeedSeries = new QLineSeries();
     sensorWindSpeedSeries->setColor(QColor(Qt::red));
 
-    for (int i = 0; i < categories.size(); ++i) {
+    for (int i = 0; i < Categories.size(); ++i) {
         sensorWindSpeedSeries->append(i, sensorWindSpeeds[i]);
     }
     sensorWindSpeedSeries->setName("Скорость ветра с датчика (м/с)");
     sensorWindSpeedChart->addSeries(sensorWindSpeedSeries);
 
     QCategoryAxis *axisXSensorWind = new QCategoryAxis();
-    for (int i = 0; i < categories.size(); ++i) {
-        axisXSensorWind->append(categories[i], i);
+    for (int i = 0; i < Categories.size(); ++i) {
+        axisXSensorWind->append(Categories[i], i);
     }
     sensorWindSpeedChart->setAxisX(axisXSensorWind, sensorWindSpeedSeries);
 
@@ -160,50 +232,28 @@ QChart* ScheduleOfWeather::MakeTempChartDataBase(const QList<double>& sensorWind
     return sensorWindSpeedChart;
 }
 
-void ScheduleOfWeather::PlacementOfCharts()
+void ScheduleOfWeather::MakeWidgetsAndCharts()
 {
-
-}
-
-ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
-{
-
-
-   // WorkWithDb();
-    QVector<QString> TempCategories = {" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
-     categories = {" ", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
-
-    QList<double> temperatures{0, 2, 0, 0, -10, 0, 23, 25};
-    //QList<double> temperatures2{0, 18, 20, 22, 21, 19, 23, 25};
-    QList<double> windSpeeds{0, 5, 7, 6, 8, 4, 9, 5};
-
-    // Данные для новых графиков
-    QList<double> sensorTemperatures{0, 17, 19, 21, 20, 18, 22, 24};
-    QList<double> sensorWindSpeeds{0, 4, 6, 5, 7, 3, 8, 4};
-
-    // Создание графика температуры
     QChart* temperatureChart = MakeTempChartApi(temperatures);
-    // Создание графика скорости ветра
     QChart* windSpeedChart = MakeWindSpChartApi(windSpeeds);
-    // // Создание графика температуры с датчика
     QChart* sensorTemperatureChart = MakeTempChartDataBase(sensorTemperatures);
-    // // Создание графика скорости ветра с датчика
     QChart* sensorWindSpeedChart = MakeWindSpChartApi(sensorWindSpeeds);
 
-    // Создание виджетов графиков
-    QChartView *temperatureChartView = new QChartView(temperatureChart);
+    temperatureChartView = new QChartView(temperatureChart);
     temperatureChartView->setRenderHint(QPainter::Antialiasing);
 
-    QChartView *windSpeedChartView = new QChartView(windSpeedChart);
+    windSpeedChartView = new QChartView(windSpeedChart);
     windSpeedChartView->setRenderHint(QPainter::Antialiasing);
 
-    QChartView *sensorTemperatureChartView = new QChartView(sensorTemperatureChart);
+    sensorTemperatureChartView = new QChartView(sensorTemperatureChart);
     sensorTemperatureChartView->setRenderHint(QPainter::Antialiasing);
 
-    QChartView *sensorWindSpeedChartView = new QChartView(sensorWindSpeedChart);
+    sensorWindSpeedChartView = new QChartView(sensorWindSpeedChart);
     sensorWindSpeedChartView->setRenderHint(QPainter::Antialiasing);
+}
 
-    // Создание вертикального layout для размещения графиков
+void ScheduleOfWeather::PlacementOfCharts()
+{
     QHBoxLayout* mainlayout = new QHBoxLayout(this);
     QVBoxLayout *leftLayout = new QVBoxLayout();
     QVBoxLayout *rightLayout = new QVBoxLayout();
@@ -214,15 +264,18 @@ ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
     rightLayout->addWidget(sensorTemperatureChartView);
     rightLayout->addWidget(sensorWindSpeedChartView);
 
-
     mainlayout->addLayout(leftLayout);
-
     mainlayout->addLayout(rightLayout);
 
-//    CustomTableWidget* TableOfWeather = new CustomTableWidget();
-
-//    mainlayout->addWidget(TableOfWeather);
-
-
     setLayout(mainlayout);
+}
+
+ScheduleOfWeather::ScheduleOfWeather(QWidget *parent) : QWidget(parent)
+{
+   // MakeCategories();
+    WorkWithDb();
+
+   // SetDataToScheudle();
+    MakeWidgetsAndCharts();
+    PlacementOfCharts();
 }
