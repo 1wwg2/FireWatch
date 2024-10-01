@@ -13,35 +13,44 @@
 #include <QDebug>
 #include <QtMath>
 #include <QDate>
-
+#include <QCoreApplication>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QDebug>
 
 class ScheduleOfWeather : public QWidget
 {
     Q_OBJECT
 
 private:
-    QList<QString> Categories;
-    QVector<double> temperatures;
-    QList<double> windSpeeds;
+    QList<QString> CategoriesForApi;
+    QList<QString> CategoriesForDb;
+    QVector<double> TemperaturesFromApi;
+    QVector<double> WindSpeedsFromApi;
 
-    QList<double> sensorTemperatures;
-    QList<double> sensorWindSpeeds;
-
+    QVector<double> TemperaturesFromDb;
+    QVector<double> WindSpeedsFromDb;
 
     QChartView* temperatureChartView;
-    // Создание графика скорости ветра
     QChartView* windSpeedChartView;
-    // // Создание графика температуры с датчика
     QChartView* sensorTemperatureChartView;
-    // // Создание графика скорости ветра с датчика
     QChartView* sensorWindSpeedChartView;
-    // Поле класса для хранения категорий
+
+    QNetworkReply* Reply = nullptr;
+
     QString ExtractDate(const QString& dateTimeString);
+
+
+    void FetchWeatherFromApi();
 
     void WorkWithDb();
 
     void MakeCategories();
-    void SetDataToScheudle(const QVector<double>& TemperatureDb);
+    QList<QString> MakeCategoriesForDb(QList<QString>& DateFromSevenDays);
+    void SetDataToScheudle();
 
     QChart* MakeTempChartApi(const QList<double>& temperatures);
     QChart* MakeWindSpChartApi(const QList<double>& windSpeeds);
@@ -51,7 +60,11 @@ private:
 
     void MakeWidgetsAndCharts();
     void PlacementOfCharts();
+private slots:
+    void OnReplyReceived();
 public:
+
+
     explicit ScheduleOfWeather(QWidget *parent = nullptr);
 
 };

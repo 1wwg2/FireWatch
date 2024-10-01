@@ -1,4 +1,4 @@
-QT = core gui widgets sql charts
+QT = core gui widgets sql charts network
 
 CONFIG += c++17 cmdline
 

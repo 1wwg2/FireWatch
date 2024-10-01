@@ -119,8 +119,8 @@ void ForestDataForm::SendInfoToDataBase()
     }
 
 
-    QString temperature = Temperature->text().trimmed();
-    QString windSpeed = WindSpeed->text().trimmed();
+    QString temperature = Temperature->text().trimmed().replace(',', '.');
+    QString windSpeed = WindSpeed->text().trimmed().replace(',', '.');
     QString weather = TableOfWeather->GetState().trimmed();
 
 
