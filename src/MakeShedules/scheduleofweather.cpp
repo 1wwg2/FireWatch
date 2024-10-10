@@ -35,7 +35,7 @@ void ScheduleOfWeather::FetchWeatherFromApi()
 void ScheduleOfWeather::WorkWithDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db");
+    db.setDatabaseName("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
 
     if (!db.open())
     {
@@ -149,20 +149,6 @@ QList<QString>  ScheduleOfWeather::MakeCategoriesForDb(QList<QString>& DateFromS
     }
     return daysOfWeek;
 }
-
-
-
-void ScheduleOfWeather::SetDataToScheudle()
-{
-
-    //TemperaturesFromApi = {0, 17, 19, qQNaN(), 20, 18, 22, 24};
-    //WindSpeedsFromApi = {0, 5, 7, 6, 8, 4, 9, 5};
-
-   // TemperaturesFromDb = {0, 17, 19, 21, 20, 18, 22, 24};
-    //WindSpeedsFromDb = {0, 4, 6, 5, 7, 3, 8, 4};
-
-}
-
 
 QChart* ScheduleOfWeather::MakeTempChartApi(const QList<double>& temperatures)
 {

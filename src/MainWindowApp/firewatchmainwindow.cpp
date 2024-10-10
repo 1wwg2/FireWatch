@@ -6,17 +6,16 @@ void FireWatchMainWindow::InitializationField(const QString& NameWorker)
     Panel = new ToolPanel(this);
 
     stackedWidget = new QStackedWidget(this);
-
     FormToEnterData = new ForestDataForm(NameWorker, this);
     Shedules = new ScheduleOfWeather(this);
-    DataOfVictim = new AssistanceToVictim(this);
+
 }
 
 void FireWatchMainWindow::SettingField()
 {
     stackedWidget->addWidget(FormToEnterData);
     stackedWidget->addWidget(Shedules);
-    stackedWidget->addWidget(DataOfVictim);
+    // stackedWidget->addWidget(DataOfVictim);
 }
 
 void FireWatchMainWindow::PlacementComponents()
@@ -41,9 +40,8 @@ void FireWatchMainWindow::SelectScheduleOfWeather()
 
 void FireWatchMainWindow::SelectAssistanceToVictim()
 {
-     stackedWidget->setCurrentIndex(2);
-    //Это тест, потом подумать, скорее всего это будет модальный диалог. Может сохранять дату в .тхт лог,
-    // может высылать на почту
+    AssistanceToVictim* DataOfVictimq = new AssistanceToVictim(this);
+    DataOfVictimq->show();
 }
 
 FireWatchMainWindow::FireWatchMainWindow(const QString& NameWorker, QMainWindow* parent) : QMainWindow(parent)
@@ -52,13 +50,11 @@ FireWatchMainWindow::FireWatchMainWindow(const QString& NameWorker, QMainWindow*
     SettingField();
     PlacementComponents();
 
-
     connect(Panel->GetForestDataForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectForestDataForm);
     connect(Panel->GetGraphBuildForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectScheduleOfWeather);
     connect(Panel->GetHelpVictimForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectAssistanceToVictim);
 
     showMaximized();
 
-    // showMaximized();
 }
 

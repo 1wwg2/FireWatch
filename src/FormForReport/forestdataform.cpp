@@ -108,7 +108,7 @@ void ForestDataForm::SendInfoToDataBase()
 {
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    const QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
+    const QString dbPath = "/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db";
     db.setDatabaseName(dbPath);
 
 
