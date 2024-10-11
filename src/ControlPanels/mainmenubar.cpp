@@ -8,10 +8,10 @@ void MainMenuBar::InitializationField()
     FirstHelpVictimAction = new QAction("&First Help Victim", this);
     SettingsMenu = new QMenu("&Settings", this);
 
-    ChangeLang = new QMenu("Language", this);
-
-    LangUsaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/USD.png"), "American", this);
-    LangRuAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/RUB.png"), "Russian", this);
+    ChangeLang = new QMenu("Language");
+                                            /*TODO: Не забыть попробовать поубирать зис, чтоб убрать проблему с wayland*/
+    LangUsaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/USD.png"), "American");
+    LangRuAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/RUB.png"), "Russian");
     LangUaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/UAH.png"), "Ukrainian", this);
 
     ChangeTheme = new QMenu("Theme", this);
