@@ -19,8 +19,6 @@ QString ScheduleOfWeather::ExtractDate(const QString& dateTimeString)
     }
 }
 
-
-
 void ScheduleOfWeather::FetchWeatherFromApi()
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
@@ -35,7 +33,7 @@ void ScheduleOfWeather::FetchWeatherFromApi()
 void ScheduleOfWeather::WorkWithDb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
+    db.setDatabaseName(ForestDataForm::GetDbPath());
 
     if (!db.open())
     {
@@ -88,8 +86,6 @@ void ScheduleOfWeather::WorkWithDb()
                      << "Дата отчета:" << ExtractDate(reportDate);
         }
 
-        qDebug() << CategoriesForDb.size();
-      //  MakeCategoriesForDb(DateFromSevenDays);
         qDebug() << CategoriesForDb.size();
     }
     else

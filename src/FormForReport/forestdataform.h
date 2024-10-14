@@ -23,6 +23,7 @@ class ForestDataForm : public QWidget
 {
     Q_OBJECT
 private:
+
     QLabel* NamesReporter;
     QLabel* DataAndTimeReport;
     QLabel* PictureOfTree;
@@ -67,6 +68,8 @@ private:
 private slots:
     void SentDataFromDay();
 public:
+    const static QString DbPath;
+    const static QString GetDbPath();
     explicit ForestDataForm(const QString& NameWorker, QWidget *parent = nullptr);
 
 

@@ -108,16 +108,13 @@ void ForestDataForm::SendInfoToDataBase()
 {
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    const QString dbPath = "/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db";
-    db.setDatabaseName(dbPath);
-
+    db.setDatabaseName(DbPath);
 
     if (!db.open())
     {
         QMessageBox::critical(this, "Database Error", "Failed to open the database.");
         return;
     }
-
 
     QString temperature = Temperature->text().trimmed().replace(',', '.');
     QString windSpeed = WindSpeed->text().trimmed().replace(',', '.');
@@ -254,8 +251,18 @@ void ForestDataForm::SentDataFromDay()
     }
 }
 
+const QString ForestDataForm::DbPath = QString("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
+
+const QString ForestDataForm::GetDbPath()
+{
+    return DbPath;
+}
+
+
 ForestDataForm::ForestDataForm(const QString& NameWorker, QWidget *parent) : QWidget(parent)
 {
+    //DbPath = QString("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
+
     InitializationField(NameWorker);
     SettingField();
     PlacementComponents();

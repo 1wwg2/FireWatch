@@ -21,6 +21,8 @@
 #include <QJsonObject>
 #include <QDebug>
 
+#include "src/FormForReport/forestdataform.h"
+
 class ScheduleOfWeather : public QWidget
 {
     Q_OBJECT
