@@ -12,6 +12,7 @@
 #include <QIcon>
 #include <QStyle>
 #include <QScopedPointer>
+#include <QApplication>
 
 #include "src/FormForReport/helpdialog.h"
 
@@ -40,7 +41,9 @@ private:
 private slots:
     void OpenAboutProjectUrl();
     void OpenHelpRules();
+    void SetDarkTheme();
 public:
+
     MainMenuBar(QWidget* parent = nullptr);
 };
 

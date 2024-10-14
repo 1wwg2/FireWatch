@@ -14,9 +14,9 @@ void MainMenuBar::InitializationField()
     LangRuAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/RUB.png"), "Russian");
     LangUaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/UAH.png"), "Ukrainian", this);
 
-    ChangeTheme = new QMenu("Theme", this);
-    LightThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Light.png"), "Light", this);
-    DarkThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Dark.png"), "Dark", this);
+    ChangeTheme = new QMenu("Theme");
+    LightThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Light.png"), "Light");
+    DarkThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Dark.png"), "Dark");
 
 }
 
@@ -49,6 +49,25 @@ void MainMenuBar::OpenAboutProjectUrl()
 void MainMenuBar::OpenHelpRules()
 {
     InstructionsForHelpPeople->show();
+}
+
+
+void MainMenuBar::SetDarkTheme()
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window, Qt::white);
+    palette.setColor(QPalette::WindowText, Qt::black);
+    palette.setColor(QPalette::Base, Qt::white);
+    palette.setColor(QPalette::AlternateBase, Qt::lightGray);
+    palette.setColor(QPalette::ToolTipBase, Qt::white);
+    palette.setColor(QPalette::ToolTipText, Qt::black);
+    palette.setColor(QPalette::Text, Qt::black);
+    palette.setColor(QPalette::Button, Qt::white);
+    palette.setColor(QPalette::ButtonText, Qt::black);
+    palette.setColor(QPalette::BrightText, Qt::red);
+    palette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+    qApp->setPalette(palette);
 }
 
 MainMenuBar::MainMenuBar(QWidget* parent) : QMenuBar(parent)
