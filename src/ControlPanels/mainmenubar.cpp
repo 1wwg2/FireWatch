@@ -51,8 +51,7 @@ void MainMenuBar::OpenHelpRules()
     InstructionsForHelpPeople->show();
 }
 
-
-void MainMenuBar::SetDarkTheme()
+void MainMenuBar::SetLightTheme()
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::white);
@@ -69,6 +68,25 @@ void MainMenuBar::SetDarkTheme()
 
     qApp->setPalette(palette);
 }
+void MainMenuBar::SetDarkTheme()
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window, QColor(30, 30, 30));
+    palette.setColor(QPalette::WindowText, QColor(230, 230, 230));
+    palette.setColor(QPalette::Base, QColor(40, 40, 40));
+    palette.setColor(QPalette::AlternateBase, QColor(55, 55, 55));
+    palette.setColor(QPalette::ToolTipBase, QColor(50, 50, 50));
+    palette.setColor(QPalette::ToolTipText, QColor(230, 230, 230));
+    palette.setColor(QPalette::Text, QColor(230, 230, 230));
+    palette.setColor(QPalette::Button, QColor(50, 50, 50));
+    palette.setColor(QPalette::ButtonText, QColor(230, 230, 230));
+    palette.setColor(QPalette::BrightText, QColor(255, 0, 0));
+    palette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+    qApp->setPalette(palette);
+
+
+}
 
 MainMenuBar::MainMenuBar(QWidget* parent) : QMenuBar(parent)
 {
@@ -78,4 +96,6 @@ MainMenuBar::MainMenuBar(QWidget* parent) : QMenuBar(parent)
 
     connect(AboutProgramAction, &QAction::triggered, this, &MainMenuBar::OpenAboutProjectUrl);
     connect(FirstHelpVictimAction, &QAction::triggered, this, &MainMenuBar::OpenHelpRules);
+    connect(LightThemeAction, &QAction::triggered, this, &MainMenuBar::SetLightTheme);
+    connect(DarkThemeAction, &QAction::triggered, this, &MainMenuBar::SetDarkTheme);
 }

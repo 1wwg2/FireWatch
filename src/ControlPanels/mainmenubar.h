@@ -41,6 +41,7 @@ private:
 private slots:
     void OpenAboutProjectUrl();
     void OpenHelpRules();
+    void SetLightTheme();
     void SetDarkTheme();
 public:
 
