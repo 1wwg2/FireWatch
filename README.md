@@ -13,4 +13,4 @@ namespace SettingPathDb
     const QString UrlApi("Url_To_Your_API");
 }
 ```
-4. Don`t forget complile program:) In QT creator you have hotkey ctrl + r. 
+4. Don`t forget complile and run program:) In QT creator you have hotkey ctrl + r. 
