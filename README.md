@@ -13,7 +13,7 @@ Utility use SQLite, Qt/Cpp and API. Employeer who have acsess in your system can
 /*src/LoginToApp/logintoapp.h*/
 namespace SettingPathDb
 {
-    const QString dbPath = "Path_To_Your_File_Db/dump/employ.db";
+    const QString dbPath = "Path_To_Your_File_Db/employ.db";
     const QString UrlApi("Url_To_Your_API");
 }
 ```
