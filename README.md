@@ -5,10 +5,12 @@ Utility use SQLite, Qt/Cpp and API. Employeer who have acsess in your system can
 # Installation and configuration
 1. Your need QT6 and SQLite. Download this, and return this guide.
 2. Follow the command.
-    ```markdown git clone git@github.com:1wwg2/FireWatch.git
+    ```markdown
+    git clone git@github.com:1wwg2/FireWatch.git
 4. Run sql script in dir ScriptForDb, in file you will see how to do it. After that you need to find API, which can shows the weather you need. I recommend https://openweathermap.org/api#pro.
 5. Regardless of your OS, just choose correct path to DB and URL API.
-  ```cpp src/LoginToApp/logintoapp.h
+  ```cpp
+//src/LoginToApp/logintoapp.h
 namespace SettingPathDb
 {
     const QString dbPath = "Path_To_Your_File_Db/dump/employ.db";
