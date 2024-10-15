@@ -17,24 +17,24 @@ class AssistanceToVictim : public QDialog
 {
     Q_OBJECT
 private:
-    QLineEdit* responsibleLine;
-    QLineEdit* emailLine;
-    QTextEdit* description;
-    QTextEdit* descriptionVictim;
-
+    QLineEdit* ResponsibleLine;
+    QLineEdit* EmailLine;
+    QTextEdit* DescriptionProblem;
+    QTextEdit* DescriptionVictimPeculiarity;
     QLabel* TimeNow;
-    QLabel* responsibleLabel;
-    QLabel* descriptionL;
-    QLabel* descriptionLabel;
+    QLabel* ResponsibleLabel;
+    QLabel* DescriptionProblemLabel;
+    QLabel* DescriptionVictimPeculiarityLabel;
     QLabel* PhoneNumber;
-    QPushButton* okBtn;
-    QPushButton* cancelBtn;
+    QPushButton* OkBtn;
+    QPushButton* CancelBtn;
 
     void SettingFields();
     void PlacementComponents();
-private slots:
 
+private slots:
     void MakeLogFile();
+
 public:
     explicit AssistanceToVictim(QWidget *parent = nullptr);
 };

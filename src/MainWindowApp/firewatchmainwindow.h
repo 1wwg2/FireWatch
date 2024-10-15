@@ -6,7 +6,6 @@
 #include <QAction>
 #include <QStackedWidget>
 
-
 #include "src/ControlPanels/mainmenubar.h"
 #include "src/ControlPanels/toolpanel.h"
 #include "src/FormForReport/forestdataform.h"
@@ -19,8 +18,7 @@ class FireWatchMainWindow : public QMainWindow
 private:
     MainMenuBar* Bar;
     ToolPanel* Panel;
-
-    QStackedWidget* stackedWidget;
+    QStackedWidget* StackedWidget;
     ForestDataForm* FormToEnterData;
     ScheduleOfWeather* Shedules;
     AssistanceToVictim* DataOfVictim;

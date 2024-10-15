@@ -13,9 +13,9 @@
 class HelpDialog : public QDialog
 {
     Q_OBJECT
-private:
-      QTextBrowser* textBrowser;
 
+private:
+    QTextBrowser* TextBrowser;
     void LoadFileContent(const QString& FilePath);
 
 public:

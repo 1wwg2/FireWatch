@@ -25,12 +25,6 @@ private:
     QAction* FirstHelpVictimAction;
     QMenu* SettingsMenu;
 
-    QMenu*  ChangeLang;
-    QAction* LangUsaAction;
-    QAction* LangRuAction;
-    QAction* LangUaAction;
-
-
     QMenu* ChangeTheme;
     QAction* LightThemeAction;
     QAction* DarkThemeAction;

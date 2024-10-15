@@ -8,12 +8,6 @@ void MainMenuBar::InitializationField()
     FirstHelpVictimAction = new QAction("&First Help Victim", this);
     SettingsMenu = new QMenu("&Settings", this);
 
-    ChangeLang = new QMenu("Language");
-                                            /*TODO: Не забыть попробовать поубирать зис, чтоб убрать проблему с wayland*/
-    LangUsaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/USD.png"), "American");
-    LangRuAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/RUB.png"), "Russian");
-    LangUaAction = new QAction(QIcon(":/resourses/MenuBar/CountryLogos/UAH.png"), "Ukrainian", this);
-
     ChangeTheme = new QMenu("Theme");
     LightThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Light.png"), "Light");
     DarkThemeAction = new QAction(QIcon(":/resourses/MenuBar/DarkAndLightTheme/Dark.png"), "Dark");
@@ -22,12 +16,6 @@ void MainMenuBar::InitializationField()
 
 void MainMenuBar::SettingField()
 {
-    SettingsMenu->addMenu(ChangeLang);
-    ChangeLang->setIcon(QIcon(":/resourses/MenuBar/DarkAndLightTheme/ChangeLanguage.png"));
-    ChangeLang->addAction(LangUsaAction);
-    ChangeLang->addAction(LangRuAction);
-    ChangeLang->addAction(LangUaAction);
-
     SettingsMenu->addMenu(ChangeTheme);
     ChangeTheme->setIcon(QIcon(":/resourses/MenuBar/DarkAndLightTheme/ChangeTheme.png"));
     ChangeTheme->addAction(LightThemeAction);

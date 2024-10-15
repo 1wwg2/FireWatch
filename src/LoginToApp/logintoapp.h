@@ -30,7 +30,6 @@ private:
     QLineEdit* PasswordUser;
     QPushButton* EnterData;
 
-
     void InitializationField();
     void SettingField();
     void PlacementComponents();

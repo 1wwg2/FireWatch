@@ -26,49 +26,37 @@
 class ScheduleOfWeather : public QWidget
 {
     Q_OBJECT
-
 private:
     QList<QString> CategoriesForApi;
     QList<QString> CategoriesForDb;
     QVector<double> TemperaturesFromApi;
     QVector<double> WindSpeedsFromApi;
-
     QVector<double> TemperaturesFromDb;
     QVector<double> WindSpeedsFromDb;
-
     QChartView* temperatureChartView;
     QChartView* windSpeedChartView;
     QChartView* sensorTemperatureChartView;
     QChartView* sensorWindSpeedChartView;
-
-    QNetworkReply* Reply = nullptr;
+    QNetworkReply* Reply;
 
     QString ExtractDate(const QString& dateTimeString);
-
-
     void FetchWeatherFromApi();
-
     void WorkWithDb();
-
     void MakeCategories();
     QList<QString> MakeCategoriesForDb(QList<QString>& DateFromSevenDays);
     void SetDataToScheudle();
-
     QChart* MakeTempChartApi(const QList<double>& temperatures);
     QChart* MakeWindSpChartApi(const QList<double>& windSpeeds);
-
     QChart* MakeWindSpChartDataBase(const QList<double>& sensorTemperatures);
     QChart* MakeTempChartDataBase(const QList<double>& sensorWindSpeeds);
-
     void MakeWidgetsAndCharts();
     void PlacementOfCharts();
+
 private slots:
     void OnReplyReceived();
+
 public:
-
-
     explicit ScheduleOfWeather(QWidget *parent = nullptr);
-
 };
 
 #endif // SCHEDULEOFWEATHER_H

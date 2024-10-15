@@ -173,8 +173,6 @@ LoginToApp::LoginToApp(QWidget* parent) : QWidget(parent)
     show();
     CheckWorkDataBase();
 
-    // TODO: Модальные окна обработки ошибок с паролем и дата базой
-
 }
 
 

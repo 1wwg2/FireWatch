@@ -16,12 +16,12 @@ class CustomTableWidget : public QWidget
     Q_OBJECT
 
 private:
-    QTableWidget *tableWidget;
+    QTableWidget *TableWidget;
     QLabel* ChooseWeatherStateLabel;
     QString State;
     QVector<QString> WheatherState;
-    void setupTable();
-    void updateLabel();
+    void SetupTable();
+    void UpdateLabel();
 public:
     explicit CustomTableWidget(QWidget *parent = nullptr);
 

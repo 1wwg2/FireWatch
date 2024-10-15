@@ -5,20 +5,20 @@ void AssistanceToVictim::SettingFields()
     QTime currentTime = QTime::currentTime();
     QDate currentDate = QDate::currentDate();
     TimeNow = new QLabel("Time report: " + currentTime.toString("HH:mm ") + currentDate.toString("dd.MM.yyyy"), this);
-    responsibleLabel = new QLabel(tr("Name & Surname of victim:"), this);
-    responsibleLine = new QLineEdit(this);
+    ResponsibleLabel = new QLabel(tr("Name & Surname of victim:"), this);
+    ResponsibleLine = new QLineEdit(this);
 
-    descriptionLabel = new QLabel(tr("Description problem:"), this);
-    description = new QTextEdit(this);
+    DescriptionVictimPeculiarityLabel = new QLabel(tr("Description problem:"), this);
+    DescriptionProblem = new QTextEdit(this);
 
-    descriptionL = new QLabel(tr("Victim`s contraindication:"), this);
-    descriptionVictim = new QTextEdit(this);
+    DescriptionProblemLabel = new QLabel(tr("Victim`s contraindication:"), this);
+    DescriptionVictimPeculiarity = new QTextEdit(this);
 
     PhoneNumber = new QLabel(tr("Phone number person:"), this);
-    emailLine = new QLineEdit(this);
+    EmailLine = new QLineEdit(this);
 
-    okBtn     = new QPushButton(tr("ok"));
-    cancelBtn = new QPushButton(tr("cancel"));
+    OkBtn     = new QPushButton(tr("ok"));
+    CancelBtn = new QPushButton(tr("cancel"));
 }
 
  void AssistanceToVictim::PlacementComponents()
@@ -26,16 +26,16 @@ void AssistanceToVictim::SettingFields()
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->addWidget(TimeNow);
-    mainLayout->addWidget(responsibleLabel);
-    mainLayout->addWidget(responsibleLine);
+    mainLayout->addWidget(ResponsibleLabel);
+    mainLayout->addWidget(ResponsibleLine);
     mainLayout->addSpacing(10);
 
-    mainLayout->addWidget(descriptionLabel);
-    mainLayout->addWidget(description);
+    mainLayout->addWidget(DescriptionVictimPeculiarityLabel);
+    mainLayout->addWidget(DescriptionProblem);
     mainLayout->addSpacing(10);
 
-    mainLayout->addWidget(descriptionL);
-    mainLayout->addWidget(descriptionVictim);
+    mainLayout->addWidget(DescriptionProblemLabel);
+    mainLayout->addWidget(DescriptionVictimPeculiarity);
     mainLayout->addSpacing(10);
 
 
@@ -43,7 +43,7 @@ void AssistanceToVictim::SettingFields()
     emailLabelsLayout->addWidget(PhoneNumber);
 
     mainLayout->addLayout(emailLabelsLayout);
-    mainLayout->addWidget(emailLine);
+    mainLayout->addWidget(EmailLine);
     mainLayout->addSpacing(10);
 
     QHBoxLayout* deadlineLabelsLayout = new QHBoxLayout;
@@ -54,8 +54,8 @@ void AssistanceToVictim::SettingFields()
     mainLayout->addLayout(deadLineLayout);
 
     QHBoxLayout* buttonsLayout = new QHBoxLayout;
-    buttonsLayout->addWidget(cancelBtn);
-    buttonsLayout->addWidget(okBtn);
+    buttonsLayout->addWidget(CancelBtn);
+    buttonsLayout->addWidget(OkBtn);
     mainLayout->addLayout(buttonsLayout);
 
     setLayout(mainLayout);
@@ -79,10 +79,10 @@ void AssistanceToVictim::MakeLogFile()
         QTextStream out(&file);
 
         out << TimeNow->text() << "\n";
-        out << responsibleLabel->text() + " " << responsibleLine->text() << "\n";
-        out << descriptionLabel->text() + " " << description->toPlainText() << "\n";
-        out << descriptionL->text()  + " " << descriptionVictim->toPlainText() << "\n";
-        out << PhoneNumber->text() + " " << emailLine->text() << "\n";
+        out << ResponsibleLabel->text() + " " << ResponsibleLine->text() << "\n";
+        out << DescriptionVictimPeculiarityLabel->text() + " " << DescriptionProblem->toPlainText() << "\n";
+        out << DescriptionProblemLabel->text()  + " " << DescriptionVictimPeculiarity->toPlainText() << "\n";
+        out << PhoneNumber->text() + " " << EmailLine->text() << "\n";
 
         file.close();
         qDebug() << "Данные успешно записаны в файл.";
@@ -99,8 +99,8 @@ AssistanceToVictim::AssistanceToVictim(QWidget *parent) : QDialog(parent)
 {
     SettingFields();
     PlacementComponents();
-    connect(okBtn,     SIGNAL(clicked()), SLOT(MakeLogFile()));
-    connect(cancelBtn, SIGNAL(clicked()), SLOT(reject()));
+    connect(OkBtn,     &QPushButton::clicked, this, &AssistanceToVictim::MakeLogFile);
+    connect(CancelBtn, &QPushButton::clicked, this, &QDialog::reject);
 
     setWindowTitle(tr("Report extremal situation"));
     setFixedSize(500,500);

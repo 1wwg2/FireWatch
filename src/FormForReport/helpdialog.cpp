@@ -2,12 +2,12 @@
 
 HelpDialog::HelpDialog(QDialog* parent) : QDialog(parent)
 {
-    textBrowser = new QTextBrowser(this);
+    TextBrowser = new QTextBrowser(this);
     setFixedSize(700, 1000);
     setModal(false);
     setWindowTitle("First Help Instructions");
     QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(textBrowser);
+    layout->addWidget(TextBrowser);
 
     LoadFileContent(":/resourses/MenuBar/FirstAid/FirstHelpInstruction.html");
 
@@ -24,7 +24,7 @@ void HelpDialog::LoadFileContent(const QString& FilePath)
 
     QTextStream in(&file);
     QString content = in.readAll();
-    textBrowser->setHtml(content);
+    TextBrowser->setHtml(content);
 
     file.close();
 }
