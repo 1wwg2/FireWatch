@@ -4,7 +4,8 @@ Utility use SQLite, Qt/Cpp and API. Employeer who have acsess in your system can
 
 # Installation and configuration
 1. Your need QT6 and SQLite. Download this, and return this guide.
-2. Run sql script in dir dump, in file you will see how to do it. After you need to find API, which can shows the weather you need. I recommend https://openweathermap.org/api#pro
+2. Run sql script in dir dump, in file you will see how to do it. After you need to find API, which can shows the weather you need.
+I recommend https://openweathermap.org/api#pro
 3. 
 
 
