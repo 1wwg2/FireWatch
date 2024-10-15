@@ -337,14 +337,6 @@ void ScheduleOfWeather::OnReplyReceived()
     {
         QMessageBox::critical(this, "Error",
                               "API or Database is not working. Please contact support.");
-
-
-        QPixmap pixmap(":/resourses/Wheather/503Error.jpg");
-        ErrorLabel->setPixmap(pixmap);
-        ErrorLabel->setScaledContents(true);
-        ErrorLabel->setGeometry(this->rect());
-        ErrorLabel->show();
-
     }
     Reply->deleteLater();
 }

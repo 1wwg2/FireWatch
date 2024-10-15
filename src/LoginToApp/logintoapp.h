@@ -22,7 +22,7 @@
 namespace SettingPathDb
 {
     const QString dbPath = "/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db";
-    const QString UrlApi("https://api.openweathermap.org/data/2.5/forecast?lat=50.00&lon=36.99&appid=6c1d47b799f721b19e70f329e 97f00e3&units=metric");
+    const QString UrlApi("https://api.openweathermap.org/data/2.5/forecast?lat=50.00&lon=36.99&appid=6c1d47b799f721b19e70f329e97f00e3&units=metric");
 }
 
 class LoginToApp : public QWidget
