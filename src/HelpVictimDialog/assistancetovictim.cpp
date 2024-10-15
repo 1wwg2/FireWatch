@@ -85,11 +85,14 @@ void AssistanceToVictim::MakeLogFile()
         out << PhoneNumber->text() + " " << EmailLine->text() << "\n";
 
         file.close();
-        qDebug() << "Данные успешно записаны в файл.";
     }
     else
     {
-        qDebug() << "Ошибка при открытии файла для записи.";
+        QMessageBox* BoxError = new QMessageBox();
+        BoxError->setIcon(QMessageBox::Critical);
+        BoxError->setWindowTitle("Error!");
+        BoxError->setText("Contact with tech support");
+        BoxError->exec();
     }
 
     accept();

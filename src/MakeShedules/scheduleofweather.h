@@ -21,7 +21,6 @@
 #include <QJsonObject>
 #include <QDebug>
 
-#include "src/FormForReport/forestdataform.h"
 
 class ScheduleOfWeather : public QWidget
 {
@@ -38,6 +37,7 @@ private:
     QChartView* sensorTemperatureChartView;
     QChartView* sensorWindSpeedChartView;
     QNetworkReply* Reply;
+    QLabel* ErrorLabel;
 
     QString ExtractDate(const QString& dateTimeString);
     void FetchWeatherFromApi();

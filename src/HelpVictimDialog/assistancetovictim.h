@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QDir>
 #include <QStandardPaths>
+#include <QMessageBox>
 
 class AssistanceToVictim : public QDialog
 {

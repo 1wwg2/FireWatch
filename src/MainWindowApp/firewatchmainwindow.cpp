@@ -15,7 +15,6 @@ void FireWatchMainWindow::SettingField()
 {
     StackedWidget->addWidget(FormToEnterData);
     StackedWidget->addWidget(Shedules);
-    // stackedWidget->addWidget(DataOfVictim);
 }
 
 void FireWatchMainWindow::PlacementComponents()
@@ -30,7 +29,7 @@ void FireWatchMainWindow::PlacementComponents()
 
 void FireWatchMainWindow::SelectForestDataForm()
 {
-   StackedWidget->setCurrentIndex(0);
+    StackedWidget->setCurrentIndex(0);
 }
 
 void FireWatchMainWindow::SelectScheduleOfWeather()
@@ -53,8 +52,7 @@ FireWatchMainWindow::FireWatchMainWindow(const QString& NameWorker, QMainWindow*
     connect(Panel->GetForestDataForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectForestDataForm);
     connect(Panel->GetGraphBuildForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectScheduleOfWeather);
     connect(Panel->GetHelpVictimForm(), &QAction::triggered, this, &FireWatchMainWindow::SelectAssistanceToVictim);
-
+    setMinimumSize(1000, 1000);
     showMaximized();
 
 }
-

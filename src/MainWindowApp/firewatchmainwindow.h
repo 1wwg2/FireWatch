@@ -12,6 +12,7 @@
 #include "src/MakeShedules/scheduleofweather.h"
 #include "src/HelpVictimDialog/assistancetovictim.h"
 
+
 class FireWatchMainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,6 +23,7 @@ private:
     ForestDataForm* FormToEnterData;
     ScheduleOfWeather* Shedules;
     AssistanceToVictim* DataOfVictim;
+    QLabel* LogoPic;
 
     void InitializationField(const QString& NameWorker);
     void SettingField();

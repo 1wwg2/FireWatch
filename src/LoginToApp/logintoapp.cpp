@@ -1,6 +1,5 @@
 #include "logintoapp.h"
 
-
 void LoginToApp::InitializationField()
 {
     LogoApp = new QLabel(this);
@@ -15,7 +14,7 @@ void LoginToApp::SettingField()
 {
     QWidget::setWindowTitle("Login FireWatch");
     LogoApp->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QPixmap ToLogoApp(":/resourses/LoginForm/FirewatchLogo.png"); // не забыть поправить пути к файлам
+    QPixmap ToLogoApp(":/resourses/LoginForm/FirewatchLogo.png");
     LogoApp->setPixmap(ToLogoApp);
 
     QPixmap ToLogoUser(":/resourses/LoginForm/FiremanLogo.png");
@@ -99,7 +98,7 @@ void LoginToApp::CenterWindow()
 void LoginToApp::CheckWorkDataBase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    const QString dbPath = "/home/vitaliy/Qt_Projects/FireWatch/dump/employ.db";
+    const QString dbPath = SettingPathDb::dbPath;
 
     if (!QFile::exists(dbPath))
     {

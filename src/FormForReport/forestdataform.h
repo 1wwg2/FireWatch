@@ -18,7 +18,8 @@
 
 #include "customtablewidget.h"
 
-// TODO: Сделать фиксированный минимум приложения и иконку с ГЛАВНЫМ ОКНОМ
+
+
 class ForestDataForm : public QWidget
 {
     Q_OBJECT

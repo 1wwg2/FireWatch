@@ -31,7 +31,7 @@ void MainMenuBar::PlacementComponents()
 
 void MainMenuBar::OpenAboutProjectUrl()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/1wwg2/FireWatch/blob/main/README.md")); //поставить ссылку на рид.md
+    QDesktopServices::openUrl(QUrl("https://github.com/1wwg2/FireWatch/blob/main/README.md"));
 }
 
 void MainMenuBar::OpenHelpRules()

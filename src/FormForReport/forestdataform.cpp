@@ -1,5 +1,10 @@
 #include "forestdataform.h"
+#include "src/LoginToApp/logintoapp.h"
 
+namespace SettingPathDb
+{
+    extern const QString dbPath;
+}
 void ForestDataForm::InitializationField(const QString& NameWorker)
 {
     NamesReporter = new QLabel("Reported by:\n" + NameWorker, this);
@@ -47,7 +52,6 @@ void ForestDataForm::PlacementComponents()
     PictureOfTitle->setFixedSize(600, 200);
     LayoutCenter->addWidget(PictureOfTitle, 0, Qt::AlignCenter);
 
-
     LayoutCenter->addWidget(Celsius, 0, Qt::AlignRight);
     Temperature->setFixedSize(550, 40);
     Temperature->setValidator(new CustomValidator(this));
@@ -60,14 +64,11 @@ void ForestDataForm::PlacementComponents()
     WindSpeed->setPlaceholderText("Enter wind speed M/S:");
     LayoutCenter->addWidget(WindSpeed, 0, Qt::AlignCenter);
 
-
     TableOfWeather->setFixedSize(500, 200);
     LayoutCenter->addWidget(TableOfWeather, 0, Qt::AlignCenter);
 
     SumbitData->setFixedSize(550, 40);
     LayoutCenter->addWidget(SumbitData, 0, Qt::AlignCenter);
-
-
     LayoutCenter->addStretch();
     LayoutLeft->setContentsMargins(0, 0, 0, 0);
     LayoutRight->addWidget(DataAndTimeReport, 0, Qt::AlignLeft);
@@ -119,8 +120,6 @@ void ForestDataForm::SendInfoToDataBase()
     QString temperature = Temperature->text().trimmed().replace(',', '.');
     QString windSpeed = WindSpeed->text().trimmed().replace(',', '.');
     QString weather = TableOfWeather->GetState().trimmed();
-
-
     QString fullName = NamesReporter->text().trimmed();
     QStringList parts = fullName.split('\n');
     QString name = (parts.size() > 1) ? parts[1].trimmed() : fullName;
@@ -130,7 +129,6 @@ void ForestDataForm::SendInfoToDataBase()
         QMessageBox::warning(this, "Input Error", "All fields must be filled out.");
         return;
     }
-
 
     QSqlQuery findEmployeeQuery;
     findEmployeeQuery.prepare("SELECT id FROM employees WHERE full_name = :full_name");
@@ -144,7 +142,6 @@ void ForestDataForm::SendInfoToDataBase()
 
     int employeeId = findEmployeeQuery.value(0).toInt();
 
-    // Вставляем данные в таблицу reports
     QSqlQuery query;
     query.prepare("INSERT INTO reports (employee_id, temperature, wind_speed, weather) "
                   "VALUES (:employee_id, :temperature, :wind_speed, :weather)");
@@ -153,14 +150,12 @@ void ForestDataForm::SendInfoToDataBase()
     query.bindValue(":wind_speed", windSpeed.toDouble());
     query.bindValue(":weather", weather);
 
-    // Проверяем успешность выполнения запроса
     if (!query.exec())
     {
         QMessageBox::critical(this, "Database Error", "Could not save report.");
         return;
     }
 
-    // Уведомляем о успешном сохранении
     QMessageBox::information(this, "Success", "Report submitted successfully!");
 }
 
@@ -251,7 +246,7 @@ void ForestDataForm::SentDataFromDay()
     }
 }
 
-const QString ForestDataForm::DbPath = QString("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
+const QString ForestDataForm::DbPath = SettingPathDb::dbPath;
 
 const QString ForestDataForm::GetDbPath()
 {
@@ -261,8 +256,6 @@ const QString ForestDataForm::GetDbPath()
 
 ForestDataForm::ForestDataForm(const QString& NameWorker, QWidget *parent) : QWidget(parent)
 {
-    //DbPath = QString("/home/vitaliy/Cpp/PetProjects/FireWatch/dump/employ.db");
-
     InitializationField(NameWorker);
     SettingField();
     PlacementComponents();
