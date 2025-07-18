@@ -19,3 +19,9 @@ namespace SettingPathDb
 }
 ```
 4. Don`t forget complile and run program:) In QT creator you have hotkey ctrl + r. 
+   
+ 
+## 🎬 Demo 
+
+![Example](demo.gif)  
+   
